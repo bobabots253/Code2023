@@ -19,6 +19,8 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private static boolean use_csV3 = false;
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -103,4 +105,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically whilst in simulation. */
   @Override
   public void simulationPeriodic() {}
+
+  public static boolean useV3() {
+    return use_csV3;
+  }
 }

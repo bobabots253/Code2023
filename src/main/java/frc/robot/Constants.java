@@ -114,6 +114,7 @@ public class Constants {
     public static class ConveyorConstants {
         public static final int conveyorMotor = 5;
         public static final int motor = 2;
+        public static final int intakePhotoelectric = 1;
 
     }
     public static class ClimbConstants {
