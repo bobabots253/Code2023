@@ -11,7 +11,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Util;
+import frc.robot.Util;                                     
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
 
@@ -33,39 +33,47 @@ public class Arm extends ProfiledPIDSubsystem {
     /**
      * Enum class representing the two possible positions of the intake arm, UP and DOWN
      */
-    public enum State {
-        STORED(0), OUT(ArmConstants.kArmOffset); //Stored is the starting position, where the arm is stored in the bot, while out is used for intake
+    // public enum State {
+    //     STORED(0), OUT(ArmConstants.kArmOffset); //Stored is the starting position, where the arm is stored in the bot, while out is used for intake
         
-        public double position;
+    //     public double position;
         
-        /**
-         * @param position the value of the arm position in radians
-         */
-        private State(double position) {
-            this.position = position;
-        }
-    }
+    //     /**
+    //      * @param position the value of the arm position in radians
+    //      */
+    //     private State(double position) {
+    //         this.position = position;
+    //     }
+    // }
     
     private Arm() {
-        super(new ProfiledPIDController(ArmConstants.kP , ArmConstants.kI, ArmConstants.kD,
-                new TrapezoidProfile.Constraints(ArmConstants.kMaxVelocity, ArmConstants.kMaxAcceleration)), 0);
+        super(
+            new ProfiledPIDController(
+                ArmConstants.kP, 
+                ArmConstants.kI, 
+                ArmConstants.kD,
+                new TrapezoidProfile.Constraints(ArmConstants.kMaxVelocity, ArmConstants.kMaxAcceleration)
+            ),
+            0
+        );
         motor.setSmartCurrentLimit(2); 
         /*
         motor.configContinuousCurrentLimit(1);
         motor.configPeakCurrentLimit(0);
         motor.enableCurrentLimit(true);
         */
+        armEncoder.setPositionConversionFactor(2.0 * Math.PI);
         motor.setInverted(false);
         motor.burnFlash();
-        setGoal(State.STORED);
-
-        disable();
+        setGoal(ArmConstants.kStartRads);
+        // disable();
         register();
     }
 
-    public void setGoal(State goal) {
-        setGoal(goal.position);
-    }
+    // public void setGoal(State goal) {
+    //     setGoal(goal.position);
+    // }
+
     public void setOpenLoop(double value) {
         SmartDashboard.putNumber("Commanded arm actuation", value);
         motor.set(value);
@@ -103,7 +111,7 @@ public class Arm extends ProfiledPIDSubsystem {
      */
     @Override
     public double getMeasurement() {
-        return armEncoder.getPosition() * (2 * Math.PI);
+        return armEncoder.getPosition();
     }
     
     /**
@@ -115,12 +123,14 @@ public class Arm extends ProfiledPIDSubsystem {
         //FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);
         // Set motor, converting voltage to percent voltage
 
+        double feedforward = FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);
+        motor.setVoltage(output + feedforward);
 
-        motor.set(setpoint.velocity/13.209 + output/12); //without feedforward, use PID to correct error
+        // motor.set(setpoint.velocity/13.209 + output/12); //without feedforward, use PID to correct error
 
-        SmartDashboard.putNumber("pos", setpoint.position);
-        SmartDashboard.putNumber("output", output/12);
-        //SmartDashboard.putNumber("feedforward + output", (output+feedforward)/12);
+        // SmartDashboard.putNumber("pos", setpoint.position);
+        // SmartDashboard.putNumber("output", output/12);
+        // //SmartDashboard.putNumber("feedforward + output", (output+feedforward)/12);
 
     }
 }

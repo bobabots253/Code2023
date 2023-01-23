@@ -1,5 +1,6 @@
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.wpilibj.I2C.Port;
 import frc.robot.Units;
 
@@ -50,7 +51,11 @@ public class Constants {
         /* Intake constants */
         public static double kMaxVelocity = 0.25; // Maximum velocity to turn arm at, radians per second
         public static double kMaxAcceleration = 2; // Maximum acceleration to turn arm at, radians per second per second
-        public static double kArmOffset = Math.toRadians(27); //The extension of the arm necessary to enter "intake" position
+        public static double kArmOffset = Math.toRadians(27); //
+
+        public static edu.wpi.first.math.trajectory.TrapezoidProfile.State kStartRads;
+
+        public static State autoDisplacementRads;
 
     }
 

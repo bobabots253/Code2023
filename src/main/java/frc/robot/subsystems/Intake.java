@@ -73,11 +73,11 @@ public class Intake implements Subsystem {
         conveyorMotor.set(0);
     }
     
-    public boolean getIntakeSensor() {
-        if(!Robot.useV3()) {
-            return !intakePhotoelectric.get();
-        } else {
-            return false; //(RobotContainer.colorSensorV3.getProximity() >= ConveyorConstants.minimumProximity);
-        }
-    }
+    // public boolean getIntakeSensor() {
+    //     if(!Robot.useV3()) {
+    //         return !intakePhotoelectric.get();
+    //     } else {
+    //         return false; //(RobotContainer.colorSensorV3.getProximity() >= ConveyorConstants.minimumProximity);
+    //     }
+    // }
 }

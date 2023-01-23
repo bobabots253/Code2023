@@ -1,6 +1,7 @@
 package frc.robot.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -22,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Auto {
     public enum Selection {
-        COMPLEX(1), SILLY(2);
+        MOVE(1), OTHER(2);
         public int val;
         private Selection(int val) {
             this.val = val;
@@ -44,5 +45,4 @@ public class Auto {
             new CargoTrack()
         );
     }
-
 }

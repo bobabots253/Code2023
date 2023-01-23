@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -74,15 +75,16 @@ public class RobotContainer {
 
     public static Drivetrain drivetrain;
     // public static Intake intake;
-    // public static Arm arm;
+    public static Arm arm;
     public static ColorSensorV3 colorSensorV3;
     public static AHRS navX; 
     private RobotContainer() {
         navX = new AHRS(Port.kMXP);
         drivetrain = Drivetrain.getInstance();
         drivetrain.setDefaultCommand(new Drive(Drive.State.CurvatureDrive2019));
+
         //drivetrain.setDefaultCommand(new Drive(Drive.State.TankDrive));
-        // arm = Arm.getInstance();
+        arm = Arm.getInstance();
         // intake = Intake.getInstance();
         limelight = NetworkTableInstance.getDefault().getTable("limelight-intake");
         setLEDMode(LEDMode.ON);
@@ -181,59 +183,17 @@ public class RobotContainer {
     }
 
     public static Command getAutonomousCommand(Auto.Selection selectedAuto) { //TODO: change auto based on selected strategy
-        Command auto;
-        /*if(selectedAuto == Auto.Selection.INTAKEFIRST) { //Start facing cargo, drive, intake, shoot
-            auto = new SequentialCommandGroup(
-                new ParallelCommandGroup(
-                    Auto.extendIntake(),
-                    new DriveXMeters(AutoConstants.distToCargo, AutoConstants.DXMConstraints[0], AutoConstants.DXMConstraints[1])),
-                new ParallelCommandGroup(
-                    Auto.retractIntake(),
-                    new TurnXDegrees(180, AutoConstants.TXDConstraints[0], AutoConstants.TXDConstraints[1])
-                ),
-                new HubTrack(),
-                new DriveXMeters(AutoConstants.hubXOffset, AutoConstants.DXMConstraints[0], AutoConstants.DXMConstraints[1]),
-                new SillyShoot()
+        Command auto = null;
+        if (selectedAuto == Auto.Selection.MOVE) {
+            auto = Commands.runOnce(
+                () -> {
+                    arm.setGoal(ArmConstants.autoDisplacementRads);
+                    arm.enable();
+                }, 
+                arm
             );
-            
-        } else if(selectedAuto == Auto.Selection.SHOOTFIRST) {
-            auto = new SequentialCommandGroup( //Start facing hub, shoot, reverse, get near cargo
-                new HubTrack(),
-                new DriveXMeters(AutoConstants.hubXOffset, AutoConstants.DXMConstraints[0], AutoConstants.DXMConstraints[1]),
-                new SillyShoot(),
-                new DriveXMeters(-AutoConstants.backupDistance, AutoConstants.DXMConstraints[0], AutoConstants.DXMConstraints[1]),
-                new TurnXDegrees(180, AutoConstants.TXDConstraints[0], AutoConstants.TXDConstraints[1]),
-                new DriveXMeters(AutoConstants.distToCargo + AutoConstants.hubXOffset - AutoConstants.backupDistance, AutoConstants.DXMConstraints[0], AutoConstants.DXMConstraints[1])
-            ); 
-
-        } else*/
-        if(selectedAuto == Auto.Selection.SILLY) {
-            // auto = Auto.getSillyAuto();
-        } else if(selectedAuto == Auto.Selection.COMPLEX) {
-            /*auto = new SequentialCommandGroup(
-                new SillyDriveX(Units.InchesToMeters(33.8), true),
-                new HubTrack().withTimeout(3.0),
-                new SillyShoot().withTimeout(3),
-                new ParallelCommandGroup(new RunCommand(() -> {
-                        arm.setOpenLoop(0.05);
-                        intake.intake(0.9);
-                        intake.setConveyor(0.3);
-                    }, arm, intake),
-                    getPathweaverCommand(Robot.autoGroup1[0])),
-                getPathweaverCommand(Robot.autoGroup1[1]),
-                getPathweaverCommand(Robot.autoGroup1[2]),
-                new InstantCommand(() -> {
-                    arm.stopArm();
-                    intake.stopIntake();
-                }, arm, intake),
-                new HubTrack().withTimeout(3),
-                new SillyShoot()
-            );*/
-            auto = new InstantCommand();
-        } else {
-            auto = null;
         }
-        return null;
+        return auto;
     }
 
     public static RobotContainer getInstance() {
