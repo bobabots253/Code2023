@@ -22,14 +22,14 @@ import frc.robot.RobotContainer.LEDMode;
 import frc.robot.RobotContainer.ShooterVisionPipeline;
 import frc.robot.subsystems.Drivetrain;
 
-public class HubTrack implements Command {
+public class GridTrack implements Command {
     private static final PIDController TURN_PID_CONTROLLER = new PIDController(VisionConstants.kPTurn,
             VisionConstants.kITurn, VisionConstants.kDTurn);
     private static final PIDController DIST_PID_CONTROLLER = new PIDController(VisionConstants.kPDist,
             VisionConstants.kIDist, VisionConstants.kDDist);
     private Subsystem[] requirements = { Drivetrain.getInstance()};
     private Timeframe<Integer> timeframe;
-    public HubTrack() {
+    public GridTrack() {
         timeframe = new Timeframe<>(1.5, 1.0/Constants.dt);
     }
 

@@ -30,50 +30,10 @@ public class Util {
     public static final double talonFXSupplyTriggerThreshold = 70;
     public static final double talonFXSupplyTriggerDuration = 0.7;
 
-    private static int sparkMAXDefaultCurrentLimit = 60;
+    private static int sparkMAXDefaultCurrentLimit = 40;
 
     private static double voltageCompensation = Constants.kMaxVoltage;
-
-    /**
-     * Create a TalonSRX with current limiting enabled, using parameters
-     * 
-     * @param id the ID of the TalonSRX
-     * @param continuousCurrentLimit the continuous current limit to set in amps (A)
-     * @param peakCurrentLimit the peak current limit to set in amps (A)
-     * @param peakCurrentDuration the peak current limit duration to set in milliseconds (ms)
-     * 
-     * @return a fully configured TalonSRX object
-     */
-    public static TalonSRX createTalonSRX(int id, int continuousCurrentLimit, int peakCurrentLimit, int peakCurrentDuration) {
-        TalonSRXConfiguration config = new TalonSRXConfiguration();
-        /*config.continuousCurrentLimit = continuousCurrentLimit;
-        config.peakCurrentLimit = peakCurrentLimit;
-        config.peakCurrentDuration = peakCurrentDuration;
-        config.voltageCompSaturation = voltageCompensation;*/
-
-        TalonSRX talon = new TalonSRX(id);
-        talon.configFactoryDefault();
-        talon.configAllSettings(config);
-        talon.enableCurrentLimit(true);
-        talon.enableVoltageCompensation(true);
-        talon.setNeutralMode(NeutralMode.Brake);
-
-        return talon;
-    }
-
-    /**
-     * Create a TalonSRX using default current limits, with the option to disable current limiting entirely
-     * 
-     * @param id the ID of the TalonSRX
-     * @param useDefaultLimits whether or not to enable the default limits
-     * @return a fully configured TalonSRX object 
-     */
-    public static TalonSRX createTalonSRX(int id, boolean useDefaultLimits) {
-        TalonSRX talon = createTalonSRX(id, talonSRXDefaultContinuousLimit, talonSRXDefaultPeakLimit, talonSRXDefaultPeakDuration);
-        talon.enableCurrentLimit(useDefaultLimits);
-
-        return talon;
-    }
+    
 
     /**
      * Create a CANSparkMax with current limiting enabled

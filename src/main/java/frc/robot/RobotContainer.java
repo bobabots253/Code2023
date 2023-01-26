@@ -10,7 +10,6 @@ import frc.robot.Autonomous.Auto;
 import frc.robot.Constants.*;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.VisionConstants;
-import frc.robot.Constants.ConveyorConstants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.Drive;
 import frc.robot.subsystems.*;
@@ -32,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.ColorSensorV3;
@@ -58,16 +58,16 @@ public class RobotContainer {
     private static RobotContainer instance = null;
     private static final XboxController driverController = new XboxController(Constants.InputPorts.driverController);
     private static final XboxController operatorController = new XboxController(Constants.InputPorts.operatorController);
-    private static final JoystickButton driver_A = new JoystickButton(driverController, 1),
-            driver_B = new JoystickButton(driverController, 2), driver_X = new JoystickButton(driverController, 3),
-            driver_Y = new JoystickButton(driverController, 4), driver_LB = new JoystickButton(driverController, 5),
-            driver_RB = new JoystickButton(driverController, 6), driver_VIEW = new JoystickButton(driverController, 7),
-            driver_MENU = new JoystickButton(driverController, 8);
-    private static final JoystickButton operator_A = new JoystickButton(operatorController, 1),
-    operator_B = new JoystickButton(operatorController, 2), operator_X = new JoystickButton(operatorController, 3),
-    operator_Y = new JoystickButton(operatorController, 4), operator_LB = new JoystickButton(operatorController, 5),
-    operator_RB = new JoystickButton(operatorController, 6), operator_VIEW = new JoystickButton(operatorController, 7),
-    operator_MENU = new JoystickButton(operatorController, 8);
+    private static final Trigger driver_A = new JoystickButton(driverController, 1),
+        driver_B = new JoystickButton(driverController, 2), driver_X = new JoystickButton(driverController, 3),
+        driver_Y = new JoystickButton(driverController, 4), driver_LB = new JoystickButton(driverController, 5),
+        driver_RB = new JoystickButton(driverController, 6), driver_VIEW = new JoystickButton(driverController, 7),
+        driver_MENU = new JoystickButton(driverController, 8);
+    private static final Trigger operator_A = new JoystickButton(operatorController, 1),
+        operator_B = new JoystickButton(operatorController, 2), operator_X = new JoystickButton(operatorController, 3),
+        operator_Y = new JoystickButton(operatorController, 4), operator_LB = new JoystickButton(operatorController, 5),
+        operator_RB = new JoystickButton(operatorController, 6), operator_VIEW = new JoystickButton(operatorController, 7),
+        operator_MENU = new JoystickButton(operatorController, 8);
     private static final POVButton operator_DPAD_UP = new POVButton(operatorController, 0),
     operator_DPAD_RIGHT = new POVButton(operatorController, 90), operator_DPAD_DOWN = new POVButton(operatorController, 180),
     operator_DPAD_LEFT = new POVButton(operatorController, 270);
@@ -75,6 +75,7 @@ public class RobotContainer {
 
     public static Drivetrain drivetrain;
     // public static Intake intake;
+    public static Wrist wrist;
     public static Arm arm;
     public static ColorSensorV3 colorSensorV3;
     public static AHRS navX; 
@@ -86,6 +87,7 @@ public class RobotContainer {
         //drivetrain.setDefaultCommand(new Drive(Drive.State.TankDrive));
         arm = Arm.getInstance();
         // intake = Intake.getInstance();
+        wrist = Wrist.getInstance();
         limelight = NetworkTableInstance.getDefault().getTable("limelight-intake");
         setLEDMode(LEDMode.ON);
 
@@ -103,6 +105,10 @@ public class RobotContainer {
     }
 
     private void bindOI() {
+
+
+        driver_RB.whileTrue(new RunCommand(() -> wrist.setWrist(0.05), wrist));
+
         // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
         //         intake.intake(0.95);

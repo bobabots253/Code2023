@@ -56,7 +56,7 @@ public class Arm extends ProfiledPIDSubsystem {
             ),
             0
         );
-        motor.setSmartCurrentLimit(2); 
+        motor.setSmartCurrentLimit(40); 
         /*
         motor.configContinuousCurrentLimit(1);
         motor.configPeakCurrentLimit(0);

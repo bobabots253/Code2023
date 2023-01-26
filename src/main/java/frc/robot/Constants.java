@@ -59,6 +59,26 @@ public class Constants {
 
     }
 
+    public static class WristConstants {
+        public static final int intakeMotor = 0;
+        public static final int wristMotor = 0;
+
+        public static final double kMaxVelocity = 0;
+        public static final double kMaxAcceleration = 0;
+
+        /* PID Constants */
+        public static double kP = 2.9;
+        public static double kI = 0;
+        public static double kD = 0;
+
+        /* Feedforward Constants */
+        public static double kS = 0.402;
+        public static double kCos = 0.771;
+        public static double kV = 0.758;
+        public static double kA = 0.00717;
+
+    }
+
     public static class DrivetrainConstants {
         public static final int
         /* Drivetrain motor IDs */ 
@@ -98,39 +118,6 @@ public class Constants {
         public static final int rollerMotor = 3;
     }
 
-    public static class ShooterConstants {
-        /* PID constants */
-        public static final double kP = 0.32381;
-        public static final double kI = 0;
-        public static final double kD = 0; // :|
-
-         /* Feedforward Constants */ 
-         public static double kS = 0.17205;
-         public static double kV = 0.40335;
-         public static double kA = 0.016457;
- 
-         /* Shooter Constants */ 
-        public static double wheelDiameter = Units.InchesToMeters(4);
-        public static double maxVelRadS = 70.85 * 2 * Math.PI; //estimated max speed in radians/sec
-        public static double kTolerance = 0;
-        public static int master = 0;
-        public static int slave = 0;
-    }
-    public static class ConveyorConstants {
-        public static final int conveyorMotor = 5;
-        public static final int motor = 2;
-        public static final int intakePhotoelectric = 1;
-
-    }
-    public static class ClimbConstants {
-        public static final int rightMotor = 0, leftMotor = 0; 
-
-        //Shaft diameter: 0.5in
-        /* PID constants */
-        public static final double kP = 0;
-        public static final double kI = 0;
-        public static final double kD = 0;
-    }
 
     public static class VisionConstants {
         /*

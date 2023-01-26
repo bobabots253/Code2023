@@ -19,8 +19,6 @@ import frc.robot.Autonomous.Auto;
  * project.
  */
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
   private Command m_autoSelected;
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -34,6 +32,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    robot = RobotContainer.getInstance();
+    pdp.clearStickyFaults();
     m_chooser.setDefaultOption("Default Auto (Move Arm)", RobotContainer.getAutonomousCommand(Auto.Selection.MOVE));
     SmartDashboard.putData("Auto choices", m_chooser);
   }
