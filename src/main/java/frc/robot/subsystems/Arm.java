@@ -16,10 +16,10 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
 
 public class Arm extends ProfiledPIDSubsystem {
-    private static final CANSparkMax motor = Util.createSparkMAX(ArmConstants.actuateMotor, MotorType.kBrushless);
-    
-    private SparkMaxAbsoluteEncoder armEncoder = motor.getAbsoluteEncoder(Type.kDutyCycle);
-    private RelativeEncoder relArmEncoder = motor.getEncoder();
+    private static final CANSparkMax motorR = Util.createSparkMAX(10, MotorType.kBrushless);
+    private static final CANSparkMax motorL = Util.createSparkMAX(99, MotorType.kBrushless);
+    private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
+    private RelativeEncoder relArmEncoder = motorR.getEncoder();
     //private static final Encoder armEncoder = new Encoder(4,3);
     
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
@@ -56,15 +56,20 @@ public class Arm extends ProfiledPIDSubsystem {
             ),
             0
         );
-        motor.setSmartCurrentLimit(40); 
+       
         /*
         motor.configContinuousCurrentLimit(1);
         motor.configPeakCurrentLimit(0);
         motor.enableCurrentLimit(true);
         */
+
+        motorR.setSmartCurrentLimit(40); 
+        motorL.setSmartCurrentLimit(40);
+        // motorL.follow(motorR);
         armEncoder.setPositionConversionFactor(2.0 * Math.PI);
-        motor.setInverted(false);
-        motor.burnFlash();
+        motorR.setInverted(false);
+        motorL.setInverted(true);
+        // motor.burnFlash(); //dont burn flash through code - charles             *READ ME*
         setGoal(ArmConstants.kStartRads);
         // disable();
         register();
@@ -76,19 +81,14 @@ public class Arm extends ProfiledPIDSubsystem {
 
     public void setOpenLoop(double value) {
         SmartDashboard.putNumber("Commanded arm actuation", value);
-        motor.set(value);
-    }
-    /**
-     * Set the intake to rotate manually (overriding the position control)
-     * @param value Percent of maximum voltage to send to motor
-     */
-    public void rotate(double value) {
-        motor.set(value);
+        motorL.set(value);
+        motorR.set(value);
     }
     
     public void stopArm() {
-        disable();
-        motor.set(0);//makes it so it moves the same as the spring pulling, comes from testing :(
+        // disable(); disable messes up the motor
+        // motor.set(0);//makes it so it moves the same as the spring pulling, comes from testing :(
+        setOpenLoop(0);
     }
     
     /**
@@ -124,7 +124,8 @@ public class Arm extends ProfiledPIDSubsystem {
         // Set motor, converting voltage to percent voltage
 
         double feedforward = FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);
-        motor.setVoltage(output + feedforward);
+        motorL.setVoltage(output + feedforward);
+        motorR.setVoltage(output + feedforward);
 
         // motor.set(setpoint.velocity/13.209 + output/12); //without feedforward, use PID to correct error
 

@@ -15,7 +15,7 @@ public class Constants {
     public static final double kMaxVoltage = 12.0;
 
     public static class InputPorts {
-        public static final int driverController = 1, operatorController = 0;
+        public static final int driverController = 0, operatorController = 1;
     }
 
     public static class AutoConstants {
@@ -35,8 +35,8 @@ public class Constants {
     }
     
     public static class ArmConstants {
-        public static final int actuateMotor = 4; //change to actuatemotor
-
+        public static final int actuateMotorL = 4; //change to actuatemotor
+        public static final int actuateMotorR = 0;
         /* PID Constants */
         public static double kP = 2.9;
         public static double kI = 0;
@@ -60,8 +60,8 @@ public class Constants {
     }
 
     public static class WristConstants {
-        public static final int intakeMotor = 0;
-        public static final int wristMotor = 0;
+        public static final int intakeMotor = 97;
+        public static final int wristMotor = 98;
 
         public static final double kMaxVelocity = 0;
         public static final double kMaxAcceleration = 0;

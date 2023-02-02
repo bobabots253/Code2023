@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -107,7 +108,13 @@ public class RobotContainer {
     private void bindOI() {
 
 
-        driver_RB.whileTrue(new RunCommand(() -> wrist.setWrist(0.05), wrist));
+        //driver_LB.whileTrue(new RunCommand(() -> wrist.setWrist(0.05), wrist));
+        driver_RB
+            .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(0.1), arm)))
+            .onFalse(new RunCommand(() -> arm.stopArm(), arm));
+        driver_LB
+            .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(-0.1), arm)))
+            .onFalse(new RunCommand(() -> arm.stopArm(), arm));
 
         // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
