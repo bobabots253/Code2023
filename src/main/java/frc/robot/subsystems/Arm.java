@@ -102,7 +102,7 @@ public class Arm extends ProfiledPIDSubsystem {
     public void periodic() {
         //super.periodic();
 
-        SmartDashboard.putNumber("encoder value", armEncoder.getPosition() * 2 * Math.PI);
+        SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()); //johnny and charles r dumb
         SmartDashboard.putNumber("measurement", getMeasurement());
     }
     
