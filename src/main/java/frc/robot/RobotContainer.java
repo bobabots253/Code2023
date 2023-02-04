@@ -115,7 +115,6 @@ public class RobotContainer {
         driver_LB
             .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(-0.1), arm)))
             .onFalse(new RunCommand(() -> arm.stopArm(), arm));
-
         // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
         //         intake.intake(0.95);
@@ -154,7 +153,7 @@ public class RobotContainer {
         //         arm.stopArm();
         //         intake.stopIntake();
         //     }, arm, intake));
-        // //driver_LB.whileHeld(new SillyShoot());
+        // driver_LB.whileHeld(new SillyShoot());
         // driver_X.whileHeld(new HubTrack());
 
         // for(JoystickButton button : Set.of(driver_B, operator_X)) { 

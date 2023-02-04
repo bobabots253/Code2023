@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
@@ -62,16 +63,19 @@ public class Arm extends ProfiledPIDSubsystem {
         motor.configPeakCurrentLimit(0);
         motor.enableCurrentLimit(true);
         */
-
+        resetEncoders();
         motorR.setSmartCurrentLimit(40); 
         motorL.setSmartCurrentLimit(40);
         // motorL.follow(motorR);
         armEncoder.setPositionConversionFactor(2.0 * Math.PI);
+        // relArmEncoder.setPositionConversionFactor(360.0*ArmConstants.gearRatio);
         motorR.setInverted(false);
         motorL.setInverted(true);
         // motor.burnFlash(); //dont burn flash through code - charles             *READ ME*
         setGoal(ArmConstants.kStartRads);
         // disable();
+        motorR.setIdleMode(IdleMode.kBrake);
+        motorL.setIdleMode(IdleMode.kBrake);
         register();
     }
 
@@ -101,8 +105,8 @@ public class Arm extends ProfiledPIDSubsystem {
     @Override
     public void periodic() {
         //super.periodic();
-
-        SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()); //johnny and charles r dumb
+        SmartDashboard.putNumber("absolut encoder", armEncoder.getPosition());
+        SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()*360.0/100.0); //johnny and charles r dumb
         SmartDashboard.putNumber("measurement", getMeasurement());
     }
     

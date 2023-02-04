@@ -56,6 +56,7 @@ public class Constants {
         public static edu.wpi.first.math.trajectory.TrapezoidProfile.State kStartRads;
 
         public static State autoDisplacementRads;
+        public static int gearRatio = 25;
 
     }
 
