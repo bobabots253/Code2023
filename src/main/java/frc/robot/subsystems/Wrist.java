@@ -93,7 +93,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("Current angle", relWristEncoder.getPosition()*360.0/64.0);
+        SmartDashboard.putNumber("Current angle", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
     }
 
     @Override
