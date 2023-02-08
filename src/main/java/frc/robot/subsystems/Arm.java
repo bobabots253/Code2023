@@ -108,6 +108,7 @@ public class Arm extends ProfiledPIDSubsystem {
         SmartDashboard.putNumber("absolut encoder", armEncoder.getPosition());
         SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()*360.0/100.0); //johnny and charles r dumb
         SmartDashboard.putNumber("measurement", getMeasurement());
+        
     }
     
     /**
