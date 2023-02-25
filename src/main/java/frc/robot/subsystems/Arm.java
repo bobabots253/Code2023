@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
 
 public class Arm extends ProfiledPIDSubsystem {
-    private static final CANSparkMax motorR = Util.createSparkMAX(10, MotorType.kBrushless);
-    private static final CANSparkMax motorL = Util.createSparkMAX(99, MotorType.kBrushless);
+    private static final CANSparkMax motorR = Util.createSparkMAX(3, MotorType.kBrushless);
+    private static final CANSparkMax motorL = Util.createSparkMAX(1, MotorType.kBrushless);
     private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
     private RelativeEncoder relArmEncoder = motorR.getEncoder();
     //private static final Encoder armEncoder = new Encoder(4,3);

@@ -27,7 +27,7 @@ public class Constants {
     public static class DriverConstants {
         /* Common drive mode settings */
         public static final double kJoystickDeadband = 0.07; // How much of joystick is "dead" zone [0,1]
-        public static final double kDriveSens = 0.3; // Overall speed setting (turn down for demos) [0,1]
+        public static final double kDriveSens = 0.1; // Overall speed setting (turn down for demos) [0,1]
         public static final double kTurnInPlaceSens = 0.3; // Maximum turn-in-place rate (in percent of max) to allow
                                                             // robot to turn to [0,1]
         public static final double kTurnSens = 1.0; // Maximum normal turning rate (in percent of max) to allow robot to
@@ -61,8 +61,8 @@ public class Constants {
     }
 
     public static class WristConstants {
-        public static final int intakeMotor = 97;
-        public static final int wristMotor = 98;
+        public static final int intakeMotor = 4;
+        public static final int wristMotor = 10;
 
         public static final double kMaxVelocity = 0;
         public static final double kMaxAcceleration = 0;
@@ -85,8 +85,8 @@ public class Constants {
         /* Drivetrain motor IDs */ 
             leftMaster = 3, // TalonFX right Masters & Slaves currently reversed
             leftSlave = 1, // TalonFX
-            rightMaster = 2, // TalonFX
-            rightSlave = 4; // TalonFX
+            rightMaster = 4, // TalonFX
+            rightSlave = 2; // TalonFX
         
         /* feedforward constants */
         public static final double kS = 0.66589; // voltage required to overcome friction (V)

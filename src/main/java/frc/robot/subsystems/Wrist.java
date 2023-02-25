@@ -11,6 +11,7 @@ import frc.robot.Constants.ArmConstants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -27,7 +28,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     private static final CANSparkMax intakeMotor = Util.createSparkMAX(WristConstants.intakeMotor, MotorType.kBrushless);
     //private static CANSparkMax conveyorMotor;
     private static final CANSparkMax wristMotor = Util.createSparkMAX(WristConstants.wristMotor, MotorType.kBrushless);
-    
+    private static final RelativeEncoder wristEncoder = wristMotor.getEncoder();
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
 
 
@@ -74,6 +75,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     public void intake(double value) {
         intakeMotor.set(value);
     }
+    // add methods to spin in opposite direction
     public void setWrist(double value) {
         wristMotor.set(value);
     }
@@ -92,14 +94,15 @@ public class Wrist extends ProfiledPIDSubsystem {
     @Override
     protected void useOutput(double output, State setpoint) {
         // TODO Auto-generated method stub
-        
+        double feedforward = FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);
+        wristMotor.setVoltage(output + feedforward);
         
     }
 
     @Override
     protected double getMeasurement() {
         // TODO Auto-generated method stub
-        return 0;
+        return wristEncoder.getPosition();
     }
     
     // public boolean getIntakeSensor() {
