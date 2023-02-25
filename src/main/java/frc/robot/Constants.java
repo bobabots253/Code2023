@@ -63,6 +63,7 @@ public class Constants {
     public static class WristConstants {
         public static final int intakeMotor = 4;
         public static final int wristMotor = 10;
+        public static final int gearRatio = 64;
 
         public static final double kMaxVelocity = 0;
         public static final double kMaxAcceleration = 0;
