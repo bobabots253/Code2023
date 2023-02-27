@@ -75,7 +75,7 @@ public class RobotContainer {
     public static NetworkTable limelight;
 
     public static Drivetrain drivetrain;
-    // public static Intake intake;
+    public static Intake intake;
     public static Wrist wrist;
     public static Arm arm;
     public static ColorSensorV3 colorSensorV3;
@@ -89,6 +89,7 @@ public class RobotContainer {
         arm = Arm.getInstance();
         // intake = Intake.getInstance();
         wrist = Wrist.getInstance();
+        intake = Intake.getInstance();
         limelight = NetworkTableInstance.getDefault().getTable("limelight-intake");
         setLEDMode(LEDMode.ON);
 
@@ -119,14 +120,14 @@ public class RobotContainer {
             .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         driver_B
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(0.9), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
+            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(0.9), wrist)))
+            .onFalse(new RunCommand(() -> intake.stopIntake(), wrist));
         driver_Y
             .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         driver_X
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(-0.9), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
+            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(-0.9), wrist)))
+            .onFalse(new RunCommand(() -> intake.stopIntake(), wrist));
             // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
         //         intake.intake(0.95);

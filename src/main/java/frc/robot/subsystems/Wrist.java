@@ -26,7 +26,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Wrist extends ProfiledPIDSubsystem {
     
-    private static final CANSparkMax intakeMotor = Util.createSparkMAX(WristConstants.intakeMotor, MotorType.kBrushless);
     //private static CANSparkMax conveyorMotor;
     private static final CANSparkMax wristMotor = Util.createSparkMAX(WristConstants.wristMotor, MotorType.kBrushless);
     private static final RelativeEncoder wristEncoder = wristMotor.getEncoder();
@@ -51,7 +50,6 @@ public class Wrist extends ProfiledPIDSubsystem {
             ),
             0
         );
-        intakeMotor.setInverted(true);
         wristMotor.setInverted(false);
         //conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
         // conveyorMotor.setInverted(true);
@@ -74,20 +72,12 @@ public class Wrist extends ProfiledPIDSubsystem {
      * 
      * @param value Percent of maximum voltage to send to motor
      */
-    public void intake(double value) {
-        intakeMotor.set(value);
-    }
+    
     // add methods to spin in opposite direction
     public void setWrist(double value) {
         wristMotor.set(value);
     }
     
-    /**
-     * Stops the intake
-     */
-    public void stopIntake() {
-        intakeMotor.set(0);
-    }
 
     public void stopWrist() {
         wristMotor.set(0);
