@@ -64,8 +64,8 @@ public class Arm extends ProfiledPIDSubsystem {
         motor.enableCurrentLimit(true);
         */
         resetEncoders();
-        motorR.setSmartCurrentLimit(40); 
-        motorL.setSmartCurrentLimit(40);
+        // motorR.setSmartCurrentLimit(40); 
+        // motorL.setSmartCurrentLimit(40);
         // motorL.follow(motorR);
         armEncoder.setPositionConversionFactor(2.0 * Math.PI);
         // relArmEncoder.setPositionConversionFactor(360.0*ArmConstants.gearRatio);

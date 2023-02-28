@@ -55,7 +55,7 @@ public class Constants {
 
         public static edu.wpi.first.math.trajectory.TrapezoidProfile.State kStartRads;
 
-        public static State autoDisplacementRads;
+        public static double autoDisplacementRads = 40;
         public static int gearRatio = 25;
 
     }
@@ -69,9 +69,9 @@ public class Constants {
         public static final double kMaxAcceleration = 0;
 
         /* PID Constants */
-        public static double kP = 2.9;
+        public static double kP = 6.6544;
         public static double kI = 0;
-        public static double kD = 0;
+        public static double kD = 4.833;
 
         /* Feedforward Constants */
         public static double kS = 0.402;

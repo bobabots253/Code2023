@@ -51,10 +51,11 @@ public class Wrist extends ProfiledPIDSubsystem {
             0
         );
         wristMotor.setInverted(false);
-        //conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
-        // conveyorMotor.setInverted(true);
-        // conveyorMotor.burnFlash();
-        /*conveyorMotor.setInverted(false);
+        /*
+        conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
+        conveyorMotor.setInverted(true);
+        conveyorMotor.burnFlash();
+        conveyorMotor.setInverted(false);
         conveyorMotor.burnFlash();*/
         register();
     }
@@ -84,7 +85,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("Current angle", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
+        SmartDashboard.putNumber("Current angle of Wrist", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
     }
 
     @Override

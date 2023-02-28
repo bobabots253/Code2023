@@ -120,14 +120,14 @@ public class RobotContainer {
             .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         driver_B
-            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(0.9), wrist)))
-            .onFalse(new RunCommand(() -> intake.stopIntake(), wrist));
+            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(0.9), intake)))
+            .onFalse(new RunCommand(() -> intake.stopIntake(), intake));
         driver_Y
             .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         driver_X
-            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(-0.9), wrist)))
-            .onFalse(new RunCommand(() -> intake.stopIntake(), wrist));
+            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(-0.9), intake)))
+            .onFalse(new RunCommand(() -> intake.stopIntake(), intake));
             // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
         //         intake.intake(0.95);
@@ -209,14 +209,27 @@ public class RobotContainer {
 
     public static Command getAutonomousCommand(Auto.Selection selectedAuto) { //TODO: change auto based on selected strategy
         Command auto = null;
-        if (selectedAuto == Auto.Selection.MOVE) {
-            auto = Commands.runOnce(
-                () -> {
-                    arm.setGoal(ArmConstants.autoDisplacementRads);
-                    arm.enable();
-                }, 
-                arm
-            );
+        switch (selectedAuto) {
+            case MOVEARM:
+                auto = Commands.runOnce(
+                    () -> {
+                        arm.setGoal(ArmConstants.autoDisplacementRads);
+                        arm.enable();
+                    }, 
+                    arm
+                );
+                break;
+            case MOVEWRIST:
+                auto = Commands.runOnce(
+                    () -> {
+                        wrist.setGoal(ArmConstants.autoDisplacementRads);
+                        wrist.enable();
+                    }, 
+                    wrist
+                );
+                break;
+            default:
+                break;
         }
         return auto;
     }
