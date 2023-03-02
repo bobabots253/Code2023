@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robot = RobotContainer.getInstance();
     pdp.clearStickyFaults();
-    m_chooser.setDefaultOption("Default Auto (Move Arm)", RobotContainer.getAutonomousCommand(Auto.Selection.MOVE));
+    m_chooser.setDefaultOption("Default Auto (Move Arm)", RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST));
     SmartDashboard.putData("Auto choices", m_chooser);
   }
 
@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
     pdp.clearStickyFaults();
     CommandScheduler.getInstance().schedule(m_chooser.getSelected());
     System.out.println("Auto selected: " + m_autoSelected);
-    RobotContainer.getAutonomousCommand(Auto.Selection.MOVE);
+    // RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST);
   }
 
   /** This function is called periodically during autonomous. */

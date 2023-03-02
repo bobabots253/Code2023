@@ -30,9 +30,9 @@ public class Wrist extends ProfiledPIDSubsystem {
     //private static CANSparkMax conveyorMotor;
     private static final CANSparkMax wristMotor = Util.createSparkMAX(WristConstants.wristMotor, MotorType.kBrushless);
     private static final RelativeEncoder wristEncoder = wristMotor.getEncoder();
-    private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
+    private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kG, ArmConstants.kV, ArmConstants.kA);
 
-    private RelativeEncoder relWristEncoder = wristMotor.getEncoder();
+    //private RelativeEncoder relWristEncoder = wristMotor.getEncoder();
 
     private static Wrist instance;
     public static Wrist getInstance(){
@@ -58,6 +58,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         // conveyorMotor.burnFlash();
         /*conveyorMotor.setInverted(false);
         conveyorMotor.burnFlash();*/
+        wristEncoder.setPositionConversionFactor(2.0*Math.PI);
         register();
     }
 
@@ -94,7 +95,8 @@ public class Wrist extends ProfiledPIDSubsystem {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("Current angle", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
+        SmartDashboard.putNumber("Current angle", wristEncoder.getPosition()*360.0/WristConstants.gearRatio);
+        SmartDashboard.putNumber("Raw Position", wristEncoder.getPosition());
     }
 
     @Override
