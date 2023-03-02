@@ -119,13 +119,13 @@ public class RobotContainer {
             .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         driver_B
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(0.9), wrist)))
+            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(0.4), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
         driver_Y
             .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         driver_X
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(-0.9), wrist)))
+            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(-0.4), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
             // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
