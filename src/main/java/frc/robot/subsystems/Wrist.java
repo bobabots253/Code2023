@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
@@ -31,8 +33,8 @@ public class Wrist extends ProfiledPIDSubsystem {
     private static final CANSparkMax wristMotor = Util.createSparkMAX(WristConstants.wristMotor, MotorType.kBrushless);
     private static final RelativeEncoder wristEncoder = wristMotor.getEncoder();
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
-
-    private RelativeEncoder relWristEncoder = wristMotor.getEncoder();
+    private SparkMaxPIDController pidController;
+    // private RelativeEncoder relWristEncoder = wristMotor.getEncoder();
 
     private static Wrist instance;
     public static Wrist getInstance(){
@@ -53,6 +55,15 @@ public class Wrist extends ProfiledPIDSubsystem {
         );
         intakeMotor.setInverted(true);
         wristMotor.setInverted(false);
+        //wristEncoder.setPositionConversionFactor(2*Math.PI/WristConstants.gearRatio);
+        wristEncoder.setPosition(0);
+        pidController = wristMotor.getPIDController();
+        pidController.setP(0.1);
+        pidController.setI(0);
+        pidController.setD(0);
+        pidController.setIZone(0);
+        pidController.setFF(0);
+        pidController.setOutputRange(-0.3, 0.3);
         //conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
         // conveyorMotor.setInverted(true);
         // conveyorMotor.burnFlash();
@@ -94,7 +105,10 @@ public class Wrist extends ProfiledPIDSubsystem {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("Current angle", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
+        SmartDashboard.putNumber(
+            "WRIST: Angle", wristEncoder.getPosition()*(180.0/Math.PI)
+        );
+        SmartDashboard.putNumber("WRIST encoder value", wristEncoder.getPosition());
     }
 
     @Override
@@ -118,4 +132,9 @@ public class Wrist extends ProfiledPIDSubsystem {
     //         return false; //(RobotContainer.colorSensorV3.getProximity() >= ConveyorConstants.minimumProximity);
     //     }
     // }
+
+    public void setWristPosition(double position) {
+        pidController.setReference(position, ControlType.kPosition);
+        SmartDashboard.putNumber("SetWristPoint", position);
+    }
 }

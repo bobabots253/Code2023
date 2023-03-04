@@ -116,17 +116,21 @@ public class RobotContainer {
             .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(-0.1), arm)))
             .onFalse(new RunCommand(() -> arm.stopArm(), arm));
         driver_A
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
+            //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
+            //.onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
+            .onTrue(new RunCommand(() -> arm.setArmPosition(0), arm));
         driver_B
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(0.4), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
+            //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(0.4), wrist)))
+            //.onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(0), wrist));
         driver_Y
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
+            //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
+            //.onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
+            .onTrue(new RunCommand(() -> arm.setArmPosition(-16), arm));
         driver_X
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(-0.4), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
+            //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(-0.4), wrist)))
+            //.onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(2.8), wrist));
             // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
         //         intake.intake(0.95);
@@ -208,14 +212,27 @@ public class RobotContainer {
 
     public static Command getAutonomousCommand(Auto.Selection selectedAuto) { //TODO: change auto based on selected strategy
         Command auto = null;
-        if (selectedAuto == Auto.Selection.MOVE) {
-            auto = Commands.runOnce(
-                () -> {
-                    arm.setGoal(ArmConstants.autoDisplacementRads);
-                    arm.enable();
-                }, 
-                arm
-            );
+        switch (selectedAuto) {
+            case MOVEARM:
+                auto = Commands.runOnce(
+                    () -> {
+                        arm.setGoal(ArmConstants.autoDisplacementRads);
+                        arm.enable();
+                    }, 
+                    arm
+                );
+                break;
+            case MOVEWRIST:
+                auto = Commands.runOnce(
+                    () -> {
+                        wrist.setGoal(WristConstants.autoDisplacementRads);
+                        wrist.enable();
+                    }, 
+                    wrist
+                );
+                break;
+            default:
+                break;
         }
         return auto;
     }
