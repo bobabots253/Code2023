@@ -44,9 +44,9 @@ public class Constants {
 
         /* Feedforward Constants */
         public static double kS = 0.402;
-        public static double kG = 0.43;
-        public static double kV = 1.95;
-        public static double kA = 0.05;
+        public static double kCos = 0.771;
+        public static double kV = 0.758;
+        public static double kA = 0.00717;
 
         /* Intake constants */
         public static double kMaxVelocity = 0.25; // Maximum velocity to turn arm at, radians per second
@@ -67,18 +67,17 @@ public class Constants {
 
         public static final double kMaxVelocity = 0;
         public static final double kMaxAcceleration = 0;
-        public static final double positionRads = 2*Math.PI*0.5;
 
         /* PID Constants */
-        public static double kP = 6.6544;
+        public static double kP = 2.9;
         public static double kI = 0;
-        public static double kD = 4.833;
+        public static double kD = 0;
 
         /* Feedforward Constants */
         public static double kS = 0.402;
-        public static double kG = 0.68;
-        public static double kV = 0.98;
-        public static double kA = 0.02;
+        public static double kCos = 0.771;
+        public static double kV = 0.758;
+        public static double kA = 0.00717;
 
     }
 

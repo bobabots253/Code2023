@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class Auto {
     public enum Selection {
-        MOVEARM(1), MOVEWRIST(2), OTHER(3);
+        MOVE(1), OTHER(2);
         public int val;
         private Selection(int val) {
             this.val = val;

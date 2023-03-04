@@ -208,27 +208,14 @@ public class RobotContainer {
 
     public static Command getAutonomousCommand(Auto.Selection selectedAuto) { //TODO: change auto based on selected strategy
         Command auto = null;
-        switch (selectedAuto) {
-            case MOVEARM:
-                auto = Commands.runOnce(
-                    () -> {
-                        arm.setGoal(ArmConstants.autoDisplacementRads);
-                        arm.enable();
-                    }, 
-                    arm
-                );
-                break;
-            case MOVEWRIST:
-                auto = Commands.runOnce(
-                    () -> {
-                        wrist.setGoal(WristConstants.positionRads);
-                        wrist.enable();
-                    }, 
-                    wrist
-                );
-                break;
-            default:
-                break;
+        if (selectedAuto == Auto.Selection.MOVE) {
+            auto = Commands.runOnce(
+                () -> {
+                    arm.setGoal(ArmConstants.autoDisplacementRads);
+                    arm.enable();
+                }, 
+                arm
+            );
         }
         return auto;
     }
