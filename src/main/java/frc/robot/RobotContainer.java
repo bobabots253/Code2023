@@ -110,24 +110,30 @@ public class RobotContainer {
 
 
         //driver_LB.whileTrue(new RunCommand(() -> wrist.setWrist(0.05), wrist));
+
         driver_RB
             .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(0.1), arm)))
             .onFalse(new RunCommand(() -> arm.stopArm(), arm));
         driver_LB
             .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(-0.1), arm)))
             .onFalse(new RunCommand(() -> arm.stopArm(), arm));
+        // driver_A
+        //     .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
+        //     .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
+        // driver_B
+        //     .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(0.9), intake)))
+        //     .onFalse(new RunCommand(() -> intake.stopIntake(), intake));
         driver_A
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
-        driver_B
-            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(0.9), intake)))
-            .onFalse(new RunCommand(() -> intake.stopIntake(), intake));
+             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeGround)));
+         driver_B
+             .onTrue(new RunCommand(() -> arm.setArmPosition(0)));
         driver_Y
             .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
             .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
-        driver_X
-            .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(-0.9), intake)))
-            .onFalse(new RunCommand(() -> intake.stopIntake(), intake));
+        //driver_X
+           // .whileTrue(new RepeatCommand(new RunCommand(() -> intake.set(-0.9), intake)))
+            //.onFalse(new RunCommand(() -> intake.stopIntake(), intake));
+
             // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
         //         intake.intake(0.95);

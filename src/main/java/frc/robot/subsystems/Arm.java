@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
+import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
@@ -22,6 +23,7 @@ public class Arm extends ProfiledPIDSubsystem {
     private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
     private RelativeEncoder relArmEncoder = motorR.getEncoder();
     //private static final Encoder armEncoder = new Encoder(4,3);
+    private SparkMaxPIDController PIDController;
     
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
     
@@ -76,6 +78,12 @@ public class Arm extends ProfiledPIDSubsystem {
         // disable();
         motorR.setIdleMode(IdleMode.kBrake);
         motorL.setIdleMode(IdleMode.kBrake);
+        PIDController = motorR.getPIDController();
+        PIDController.setP(0.1);
+        PIDController.setI(0);
+        PIDController.setD(0);
+        PIDController.setOutputRange(-0.3,0.3);
+       // motorR.follow(motorL);
         register();
     }
 
@@ -86,7 +94,7 @@ public class Arm extends ProfiledPIDSubsystem {
     public void setOpenLoop(double value) {
         SmartDashboard.putNumber("Commanded arm actuation", value);
         motorL.set(value);
-        motorR.set(value);
+        
     }
     
     public void stopArm() {
@@ -130,13 +138,18 @@ public class Arm extends ProfiledPIDSubsystem {
 
         double feedforward = FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);
         motorL.setVoltage(output + feedforward);
-        motorR.setVoltage(output + feedforward);
+        
 
         // motor.set(setpoint.velocity/13.209 + output/12); //without feedforward, use PID to correct error
 
         // SmartDashboard.putNumber("pos", setpoint.position);
         // SmartDashboard.putNumber("output", output/12);
         // //SmartDashboard.putNumber("feedforward + output", (output+feedforward)/12);
+
+    }
+
+    public void setArmPosition(double encoderPosition){
+        PIDController.setReference(encoderPosition, CANSparkMax.ControlType.kPosition);
 
     }
 }
