@@ -2,7 +2,10 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
+
+import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
@@ -13,6 +16,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.Util;                                     
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
@@ -20,10 +24,11 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 public class Arm extends ProfiledPIDSubsystem {
     private static final CANSparkMax motorR = Util.createSparkMAX(3, MotorType.kBrushless);
     private static final CANSparkMax motorL = Util.createSparkMAX(1, MotorType.kBrushless);
-    private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
+    //private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
     private RelativeEncoder relArmEncoder = motorR.getEncoder();
     //private static final Encoder armEncoder = new Encoder(4,3);
-    private SparkMaxPIDController PIDController;
+
+    private SparkMaxPIDController pidController;
     
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
     
@@ -31,6 +36,7 @@ public class Arm extends ProfiledPIDSubsystem {
     public static Arm getInstance() {
         if(instance == null) instance = new Arm();
         return instance;
+
     }
     
     /**
@@ -69,21 +75,24 @@ public class Arm extends ProfiledPIDSubsystem {
         // motorR.setSmartCurrentLimit(40); 
         // motorL.setSmartCurrentLimit(40);
         // motorL.follow(motorR);
-        armEncoder.setPositionConversionFactor(2.0 * Math.PI);
+        //armEncoder.setPositionConversionFactor(2.0 * Math.PI / WristConstants.gearRatio);
         // relArmEncoder.setPositionConversionFactor(360.0*ArmConstants.gearRatio);
         motorR.setInverted(false);
-        motorL.setInverted(true);
+        motorL.setInverted(false);
+        motorL.follow(motorR, true);
         // motor.burnFlash(); //dont burn flash through code - charles             *READ ME*
         setGoal(ArmConstants.kStartRads);
         // disable();
         motorR.setIdleMode(IdleMode.kBrake);
         motorL.setIdleMode(IdleMode.kBrake);
-        PIDController = motorR.getPIDController();
-        PIDController.setP(0.1);
-        PIDController.setI(0);
-        PIDController.setD(0);
-        PIDController.setOutputRange(-0.3,0.3);
-       // motorR.follow(motorL);
+
+        pidController = motorR.getPIDController();
+        pidController.setP(0.1);
+        pidController.setI(0);
+        pidController.setD(0);
+        pidController.setIZone(0);
+        pidController.setFF(0);
+        pidController.setOutputRange(-0.3, 0.3);
         register();
     }
 
@@ -92,7 +101,7 @@ public class Arm extends ProfiledPIDSubsystem {
     // }
 
     public void setOpenLoop(double value) {
-        SmartDashboard.putNumber("Commanded arm actuation", value);
+        SmartDashboard.putNumber("Arm Commanded arm actuation", value);
         motorL.set(value);
         
     }
@@ -113,9 +122,10 @@ public class Arm extends ProfiledPIDSubsystem {
     @Override
     public void periodic() {
         //super.periodic();
-        SmartDashboard.putNumber("absolut encoder", armEncoder.getPosition());
-        SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()*360.0/100.0); //johnny and charles r dumb
-        SmartDashboard.putNumber("measurement", getMeasurement());
+        //SmartDashboard.putNumber("absolut encoder", armEncoder.getPosition());
+        //SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()*360.0/100.0); //johnny and charles r dumb
+        SmartDashboard.putNumber("Arm encoder value", relArmEncoder.getPosition());
+        SmartDashboard.putNumber("Arm measurement", getMeasurement());
         
     }
     
@@ -124,7 +134,8 @@ public class Arm extends ProfiledPIDSubsystem {
      */
     @Override
     public double getMeasurement() {
-        return armEncoder.getPosition();
+        //return armEncoder.getPosition();
+        return 0;
     }
     
     /**
@@ -148,8 +159,9 @@ public class Arm extends ProfiledPIDSubsystem {
 
     }
 
-    public void setArmPosition(double encoderPosition){
-        PIDController.setReference(encoderPosition, CANSparkMax.ControlType.kPosition);
 
+    public void setArmPosition(double position) {
+        pidController.setReference(position, ControlType.kPosition);
+        SmartDashboard.putNumber("Arm SetPoint", position);
     }
 }

@@ -55,23 +55,40 @@ public class Constants {
 
         public static edu.wpi.first.math.trajectory.TrapezoidProfile.State kStartRads;
 
-        public static double autoDisplacementRads = 40;
+        public static State autoDisplacementRads;
         public static int gearRatio = 25;
 
-        /* Position constants */
-        public static double kCubeGround = -15.942841;
-        public static double kConeUprightGround = -9.514282;
-        public static double kConeSideGround = -9.857139;
+        //arm encoder values
+        public static final double kCubeFloorIntakePosition = -5.285;
+        public static final double kCubeMidScorePosition = -21.143;
+        public static final double kCubeHighScorePosition = -27.286;
+        public static final double kConeFloorUprightIntakePosition = -2.071;
+        public static final double kConeFloorSidewaysIntakePosition = -1.786;
+        public static final double kConeMidUprightScorePosition = -25.786;
+        public static final double kConeMidSidewaysScorePosition = -17.286;
+        public static final double kConeHighUprightScorePosition = -27.143;
+
 
     }
 
     public static class WristConstants {
         public static final int intakeMotor = 4;
         public static final int wristMotor = 10;
-        public static final int gearRatio = 64;
+        public static final double gearRatio = 100.0;
+        public static double autoDisplacementRads;
 
-        public static final double kMaxVelocity = 0;
-        public static final double kMaxAcceleration = 0;
+        public static final double kMaxVelocity = 2*Math.PI;
+        public static final double kMaxAcceleration = 2*Math.PI;
+
+        //wrist encoder values for intake
+        public static final double kCubeFloorIntakePosition = 39.166;
+        public static final double kCubeMidScorePosition = 51.262;
+        public static final double kCubeHighScorePosition = 37.833;
+        public static final double kConeFloorUprightIntakePosition = 23.524;
+        public static final double kConeFloorSidewaysIntakePosition = 35.428;
+        public static final double kConeMidUprightScorePosition = 57.763;
+        public static final double kConeMidSidewaysScorePosition = 20.167;
+        public static final double kConeHighUprightScorePosition = 47.166;
 
         /* PID Constants */
         public static double kP = 6.6544;
