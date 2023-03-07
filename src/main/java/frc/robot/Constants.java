@@ -64,9 +64,10 @@ public class Constants {
         public static final double kCubeHighScorePosition = -27.286;
         public static final double kConeFloorUprightIntakePosition = -2.071;
         public static final double kConeFloorSidewaysIntakePosition = -1.786;
-        public static final double kConeMidUprightScorePosition = -25.786;
+        public static final double kConeMidUprightScorePosition = -25.00;
         public static final double kConeMidSidewaysScorePosition = -17.286;
         public static final double kConeHighUprightScorePosition = -27.143;
+        public static final double kStow = 0.0;
 
 
     }
@@ -90,6 +91,7 @@ public class Constants {
         public static final double kConeMidUprightScorePosition = 57.763;
         public static final double kConeMidSidewaysScorePosition = 20.167;
         public static final double kConeHighUprightScorePosition = 47.166;
+        public static final double kStow = 0.0;
 
         /* PID Constants */
         public static double kP = 2.9;

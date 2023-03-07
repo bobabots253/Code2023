@@ -109,12 +109,12 @@ public class RobotContainer {
 
 
         //driver_LB.whileTrue(new RunCommand(() -> wrist.setWrist(0.05), wrist));
-        driver_RB
-            .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(0.1), arm)))
-            .onFalse(new RunCommand(() -> arm.stopArm(), arm));
-        driver_LB
-            .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(-0.1), arm)))
-            .onFalse(new RunCommand(() -> arm.stopArm(), arm));
+        // driver_RB
+        //     .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(0.1), arm)))
+        //     .onFalse(new RunCommand(() -> arm.stopArm(), arm));
+        // driver_LB
+        //     .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(-0.1), arm)))
+        //     .onFalse(new RunCommand(() -> arm.stopArm(), arm));
         driver_A
             //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
             //.onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
@@ -123,14 +123,55 @@ public class RobotContainer {
             //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(0.4), wrist)))
             //.onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
             .onTrue(new RunCommand(() -> wrist.setWristPosition(0), wrist));
-        driver_Y
-            //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
-            //.onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
-            .onTrue(new RunCommand(() -> arm.setArmPosition(-16), arm));
+        // driver_Y
+        //     //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
+        //     //.onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(-16), arm));
         driver_X
             //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(-0.4), wrist)))
             //.onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
             .onTrue(new RunCommand(() -> wrist.setWristPosition(2.8), wrist));
+
+        // Cube Intake Positions
+        operator_Y
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeHighScorePosition), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist));
+        operator_A
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeFloorIntakePosition), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist));
+        operator_X
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeMidScorePosition), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeMidScorePosition), wrist));
+        operator_B
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+
+        // Cone Intake Positions
+        operator_DPAD_UP
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist));
+        operator_DPAD_RIGHT
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist));
+        operator_DPAD_LEFT
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorSidewaysIntakePosition), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorSidewaysIntakePosition), wrist));
+        operator_DPAD_DOWN
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorUprightIntakePosition), arm))
+            .onTrue (new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorUprightIntakePosition), wrist));
+
+        // Cube Intake/Outtake Action
+        operator_RB
+            .onTrue(new RunCommand(() -> wrist.intake(.75), wrist))
+            .onFalse(new RunCommand(() -> wrist.intake(0), wrist));
+        operator_LB
+            .onTrue(new RunCommand(() -> wrist.intake(-.75), wrist))
+            .onFalse(new RunCommand(() -> wrist.intake(0), wrist));
+
+        //operatorController.getLeftTriggerAxis()
+        
+                //.alongWith(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist)));
+            //.andThen(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist));
             // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
         //     .whileHeld(new RunCommand(() -> {
         //         intake.intake(0.95);
