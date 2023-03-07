@@ -76,6 +76,7 @@ public class Constants {
         public static final int wristMotor = 10;
         public static final double gearRatio = 100.0;
         public static double autoDisplacementRads;
+        public static double initialWristAngle;
 
         public static final double kMaxVelocity = 2*Math.PI;
         public static final double kMaxAcceleration = 2*Math.PI;
