@@ -10,11 +10,15 @@ import frc.robot.Constants.ArmConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -35,6 +39,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
     private SparkMaxPIDController pidController;
     // private RelativeEncoder relWristEncoder = wristMotor.getEncoder();
+    private static final SparkMaxAbsoluteEncoder wristAbsolulteEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
     private static Wrist instance;
     public static Wrist getInstance(){
@@ -53,14 +58,15 @@ public class Wrist extends ProfiledPIDSubsystem {
             ),
             0
         );
+        WristConstants.initialWristAngle = wristAbsolulteEncoder.getPosition();
         intakeMotor.setInverted(true);
         wristMotor.setInverted(false);
         //wristEncoder.setPositionConversionFactor(2*Math.PI/WristConstants.gearRatio);
         wristEncoder.setPosition(0);
         pidController = wristMotor.getPIDController();
-        pidController.setP(0.1);
-        pidController.setI(0);
-        pidController.setD(0);
+        pidController.setP(WristConstants.kP);
+        pidController.setI(WristConstants.kI);
+        pidController.setD(WristConstants.kD);
         pidController.setIZone(0);
         pidController.setFF(0);
         pidController.setOutputRange(-0.3, 0.3);
