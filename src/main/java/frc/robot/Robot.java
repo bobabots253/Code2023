@@ -67,9 +67,9 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     pdp.clearStickyFaults();
-    // CommandScheduler.getInstance().schedule(m_chooser.getSelected());
-    // System.out.println("Auto selected: " + m_autoSelected);
-    // RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST);
+    CommandScheduler.getInstance().schedule(m_chooser.getSelected());
+    System.out.println("Auto selected: " + m_autoSelected);
+    RobotContainer.getAutonomousCommand(Auto.Selection.MOVE);
   }
 
   /** This function is called periodically during autonomous. */

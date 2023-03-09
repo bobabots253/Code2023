@@ -10,9 +10,15 @@ import frc.robot.Constants.ArmConstants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxAbsoluteEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -30,8 +36,9 @@ public class Wrist extends ProfiledPIDSubsystem {
     private static final CANSparkMax wristMotor = Util.createSparkMAX(WristConstants.wristMotor, MotorType.kBrushless);
     private static final RelativeEncoder wristEncoder = wristMotor.getEncoder();
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
-
-    private RelativeEncoder relWristEncoder = wristMotor.getEncoder();
+    private SparkMaxPIDController pidController;
+    // private RelativeEncoder relWristEncoder = wristMotor.getEncoder();
+    private static final SparkMaxAbsoluteEncoder wristAbsolulteEncoder = wristMotor.getAbsoluteEncoder(Type.kDutyCycle);
 
     private static Wrist instance;
     public static Wrist getInstance(){
@@ -50,12 +57,22 @@ public class Wrist extends ProfiledPIDSubsystem {
             ),
             0
         );
+        WristConstants.initialWristAngle = wristAbsolulteEncoder.getPosition();
+        intakeMotor.setInverted(true);
         wristMotor.setInverted(false);
-        /*
-        conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
-        conveyorMotor.setInverted(true);
-        conveyorMotor.burnFlash();
-        conveyorMotor.setInverted(false);
+        //wristEncoder.setPositionConversionFactor(2*Math.PI/WristConstants.gearRatio);
+        wristEncoder.setPosition(0);
+        pidController = wristMotor.getPIDController();
+        pidController.setP(WristConstants.kP);
+        pidController.setI(WristConstants.kI);
+        pidController.setD(WristConstants.kD);
+        pidController.setIZone(0);
+        pidController.setFF(0);
+        pidController.setOutputRange(-0.3, 0.3);
+        //conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
+        // conveyorMotor.setInverted(true);
+        // conveyorMotor.burnFlash();
+        /*conveyorMotor.setInverted(false);
         conveyorMotor.burnFlash();*/
         register();
     }
@@ -85,7 +102,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("Current angle of Wrist", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
+        SmartDashboard.putNumber("Current angle", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
     }
 
     @Override
@@ -109,4 +126,9 @@ public class Wrist extends ProfiledPIDSubsystem {
     //         return false; //(RobotContainer.colorSensorV3.getProximity() >= ConveyorConstants.minimumProximity);
     //     }
     // }
+
+    public void setWristPosition(double position) {
+        pidController.setReference(position - WristConstants.initialWristAngle, ControlType.kPosition);
+        SmartDashboard.putNumber("SetWristPoint", position);
+    }
 }
