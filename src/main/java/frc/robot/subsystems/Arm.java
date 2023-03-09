@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
+
 import com.revrobotics.SparkMaxLimitSwitch;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
@@ -26,6 +27,7 @@ public class Arm extends ProfiledPIDSubsystem {
     //private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
     private RelativeEncoder relArmEncoder = motorR.getEncoder();
     //private static final Encoder armEncoder = new Encoder(4,3);
+
     private SparkMaxPIDController pidController;
     
     private static final ArmFeedforward FEEDFORWARD = new ArmFeedforward(ArmConstants.kS, ArmConstants.kCos, ArmConstants.kV, ArmConstants.kA);
@@ -83,6 +85,7 @@ public class Arm extends ProfiledPIDSubsystem {
         // disable();
         motorR.setIdleMode(IdleMode.kBrake);
         motorL.setIdleMode(IdleMode.kBrake);
+
         pidController = motorR.getPIDController();
         pidController.setP(ArmConstants.kP); //0.1
         pidController.setI(ArmConstants.kI);//0.01
@@ -100,7 +103,7 @@ public class Arm extends ProfiledPIDSubsystem {
     public void setOpenLoop(double value) {
         SmartDashboard.putNumber("Arm Commanded arm actuation", value);
         motorL.set(value);
-        motorR.set(value);
+        
     }
     
     public void stopArm() {
@@ -146,7 +149,7 @@ public class Arm extends ProfiledPIDSubsystem {
 
         double feedforward = FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);
         motorL.setVoltage(output + feedforward);
-        motorR.setVoltage(output + feedforward);
+        
 
         // motor.set(setpoint.velocity/13.209 + output/12); //without feedforward, use PID to correct error
 
@@ -155,6 +158,7 @@ public class Arm extends ProfiledPIDSubsystem {
         // //SmartDashboard.putNumber("feedforward + output", (output+feedforward)/12);
 
     }
+
 
     public void setArmPosition(double position) {
         pidController.setReference(position, ControlType.kPosition);
