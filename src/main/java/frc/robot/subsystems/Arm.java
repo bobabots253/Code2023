@@ -84,9 +84,9 @@ public class Arm extends ProfiledPIDSubsystem {
         motorR.setIdleMode(IdleMode.kBrake);
         motorL.setIdleMode(IdleMode.kBrake);
         pidController = motorR.getPIDController();
-        pidController.setP(0.1);
-        pidController.setI(0);
-        pidController.setD(0);
+        pidController.setP(ArmConstants.kP); //0.1
+        pidController.setI(ArmConstants.kI);//0.01
+        pidController.setD(ArmConstants.kD);
         pidController.setIZone(0);
         pidController.setFF(0);
         pidController.setOutputRange(-0.3, 0.3);

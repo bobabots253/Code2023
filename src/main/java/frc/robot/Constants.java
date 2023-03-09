@@ -38,8 +38,8 @@ public class Constants {
         public static final int actuateMotorL = 4; //change to actuatemotor
         public static final int actuateMotorR = 0;
         /* PID Constants */
-        public static double kP = 2.9;
-        public static double kI = 0;
+        public static double kP = 0.1;
+        public static double kI = 0.01;
         public static double kD = 0;
 
         /* Feedforward Constants */
