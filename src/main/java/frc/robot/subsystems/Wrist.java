@@ -58,7 +58,7 @@ public class Wrist extends ProfiledPIDSubsystem {
             0
         );
         WristConstants.initialWristAngle = wristAbsolulteEncoder.getPosition();
-        intakeMotor.setInverted(true);
+        // intakeMotor.setInverted(true);
         wristMotor.setInverted(false);
         //wristEncoder.setPositionConversionFactor(2*Math.PI/WristConstants.gearRatio);
         wristEncoder.setPosition(0);
@@ -102,7 +102,9 @@ public class Wrist extends ProfiledPIDSubsystem {
     }
 
     public void periodic() {
-        SmartDashboard.putNumber("Current angle", relWristEncoder.getPosition()*360.0/WristConstants.gearRatio);
+        SmartDashboard.putNumber("WRIST: Current angle", wristEncoder.getPosition()*360.0/WristConstants.gearRatio);
+        SmartDashboard.putNumber("WRIST: absolute angle", wristAbsolulteEncoder.getPosition()*360.0/WristConstants.gearRatio);
+
     }
 
     @Override
