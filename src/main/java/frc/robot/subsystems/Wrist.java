@@ -115,6 +115,7 @@ public class Wrist extends ProfiledPIDSubsystem {
             "WRIST: Angle", wristEncoder.getPosition()*(180.0/Math.PI)
         );
         SmartDashboard.putNumber("WRIST encoder value", wristEncoder.getPosition());
+        SmartDashboard.putNumber("WRIST: Absolute encoder", wristAbsolulteEncoder.getPosition());
     }
 
     @Override
@@ -140,7 +141,7 @@ public class Wrist extends ProfiledPIDSubsystem {
     // }
 
     public void setWristPosition(double position) {
-        pidController.setReference(position, ControlType.kPosition);
+        pidController.setReference(position - WristConstants.initialWristAngle, ControlType.kPosition);
         SmartDashboard.putNumber("SetWristPoint", position);
     }
 }

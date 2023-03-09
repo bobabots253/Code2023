@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -73,6 +74,7 @@ public class RobotContainer {
     operator_DPAD_RIGHT = new POVButton(operatorController, 90), operator_DPAD_DOWN = new POVButton(operatorController, 180),
     operator_DPAD_LEFT = new POVButton(operatorController, 270);
     public static NetworkTable limelight;
+    private static final Spark ledStrip = new Spark(0);
 
     public static Drivetrain drivetrain;
     // public static Intake intake;
@@ -96,6 +98,8 @@ public class RobotContainer {
 
         bindOI();
         initTrajectories();
+
+        ledStrip.set(0.81); //color: Aqua 
     }
     
     private void initTrajectories() {
@@ -151,8 +155,9 @@ public class RobotContainer {
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
             .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist));
         operator_DPAD_RIGHT
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist));
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeMidUprightScorePosition), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeMidUprightScorePosition), wrist));
+            //TODO not sure if this should be mid upright or mid sideways, see #programming
         operator_DPAD_LEFT
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorSidewaysIntakePosition), arm))
             .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorSidewaysIntakePosition), wrist));
@@ -168,6 +173,10 @@ public class RobotContainer {
             .onTrue(new RunCommand(() -> wrist.intake(-.75), wrist))
             .onFalse(new RunCommand(() -> wrist.intake(0), wrist));
 
+        double LTvalue = operatorController.getLeftTriggerAxis();
+        double RTvalue = operatorController.getRightTriggerAxis();
+
+        
         //operatorController.getLeftTriggerAxis()
         
                 //.alongWith(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist)));
