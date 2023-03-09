@@ -168,15 +168,19 @@ public class RobotContainer {
 
         // Cube Intake/Outtake Action
         operator_RB
-            .onTrue(new RunCommand(() -> wrist.intake(.75), wrist))
-            .onFalse(new RunCommand(() -> wrist.intake(0), wrist));
+            .onTrue(new RunCommand(() -> intake.set(.75), wrist))
+            .onFalse(new RunCommand(() -> intake.set(0), wrist));
         operator_LB
-            .onTrue(new RunCommand(() -> wrist.intake(-.75), wrist))
-            .onFalse(new RunCommand(() -> wrist.intake(0), wrist));
+            .onTrue(new RunCommand(() -> intake.set(-.75), wrist))
+            .onFalse(new RunCommand(() -> intake.set(0), wrist));
 
         double LTvalue = operatorController.getLeftTriggerAxis();
         double RTvalue = operatorController.getRightTriggerAxis();
+        if (LTvalue > 0.) intake.set(0.75);
+        else intake.stopIntake();
 
+        if (RTvalue > 0.) intake.set(-0.75);
+        else intake.stopIntake();
         
         //operatorController.getLeftTriggerAxis()
         
