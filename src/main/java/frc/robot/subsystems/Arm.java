@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConstants;
+import frc.robot.RobotContainer;
 import frc.robot.Util;                                     
 import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 
@@ -102,7 +103,7 @@ public class Arm extends ProfiledPIDSubsystem {
 
     public void setOpenLoop(double value) {
         SmartDashboard.putNumber("Arm Commanded arm actuation", value);
-        motorL.set(value);
+        motorR.set(value);
         
     }
     
@@ -126,6 +127,9 @@ public class Arm extends ProfiledPIDSubsystem {
         //SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()*360.0/100.0); //johnny and charles r dumb
         SmartDashboard.putNumber("Arm encoder value", relArmEncoder.getPosition());
         SmartDashboard.putNumber("Arm measurement", getMeasurement());
+        if (RobotContainer.getOperatorRightY() > 0.0) setOpenLoop(0.1);
+        else if (RobotContainer.getOperatorRightY() < 0.0) setOpenLoop(-0.1);
+        else stopArm();
         
     }
     

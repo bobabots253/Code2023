@@ -139,7 +139,7 @@ public class RobotContainer {
         // Cube Intake Positions
         operator_Y
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeHighScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist));
+            .whileTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist));
         operator_A
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeFloorIntakePosition), arm))
             .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist));
@@ -175,12 +175,24 @@ public class RobotContainer {
 
         double LTvalue = operatorController.getLeftTriggerAxis();
         double RTvalue = operatorController.getRightTriggerAxis();
-        if (LTvalue > 0.) intake.set(0.75);
-        else intake.stopIntake();
+        double rstick = operatorController.getRightY();
+        double lstick = operatorController.getLeftY();
 
-        if (RTvalue > 0.) intake.set(-0.75);
-        else intake.stopIntake();
+        // if (lstick > 0.0) {
+        //     arm.setOpenLoop(0.2);
+        // } else arm.stopArm();
+
+        // if (rstick > 0.0) {
+        //     wrist.setWrist(0.1);
+        // } else wrist.stopWrist();
+
+        // if (LTvalue > 0.0) intake.set(0.75);
+        // else intake.stopIntake();
+
+        // if (RTvalue > 0.0) intake.set(-0.75);
+        // else intake.stopIntake();
         
+
         //operatorController.getLeftTriggerAxis()
         
                 //.alongWith(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist)));
@@ -387,10 +399,17 @@ public class RobotContainer {
     public static double getThrottle() {
         return -deadbandX(driverController.getLeftY(), Constants.DriverConstants.kJoystickDeadband);
     }
+
+    public static double getOperatorLeftY() {
+        return deadbandX(operatorController.getLeftY(), Constants.DriverConstants.kJoystickDeadband);
+    }
     public static double getAltThrottle() {
         return -deadbandX(driverController.getRightY(), Constants.DriverConstants.kJoystickDeadband);
     }
 
+    public static double getOperatorRightY() {
+        return deadbandX(operatorController.getRightY(), Constants.DriverConstants.kJoystickDeadband);
+    }
     public static double getTurn() {
         return deadbandX(driverController.getRightX(), Constants.DriverConstants.kJoystickDeadband);
     }
@@ -402,6 +421,15 @@ public class RobotContainer {
     public static double getRightClimb() {
         return -deadbandX(operatorController.getRightY(), Constants.DriverConstants.kJoystickDeadband);
     }
+
+    public static double getOperatorLT() {
+        return deadbandX(operatorController.getLeftTriggerAxis(), DriverConstants.kJoystickDeadband);
+    }
+
+    public static double getOperatorRT() {
+        return deadbandX(operatorController.getRightTriggerAxis(), DriverConstants.kJoystickDeadband);
+    }
+
 
     /*public static Color getColor() {
         return colorSensorV3.getColor();
