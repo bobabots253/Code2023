@@ -168,4 +168,8 @@ public class Arm extends ProfiledPIDSubsystem {
         pidController.setReference(position, ControlType.kPosition);
         SmartDashboard.putNumber("Arm SetPoint", position);
     }
+
+    public void setArmPositionDegree(double degreePosition) {
+        
+    }
 }

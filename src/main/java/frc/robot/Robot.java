@@ -93,6 +93,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.putNumber("LTval", RobotContainer.getOperatorLT());
+    SmartDashboard.putNumber("RTval", RobotContainer.getOperatorRT());
   }
 
   /** This function is called once when the robot is disabled. */
