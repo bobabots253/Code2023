@@ -54,7 +54,7 @@ import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstrai
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Subsystem;
-
+import frc.robot.commands.GridTrack;
 
 public class RobotContainer {
     private static RobotContainer instance = null;
@@ -81,7 +81,7 @@ public class RobotContainer {
     public static Wrist wrist;
     public static Arm arm;
     public static ColorSensorV3 colorSensorV3;
-    public static AHRS navX; 
+    public static AHRS navX;
     private RobotContainer() {
         navX = new AHRS(Port.kMXP);
         drivetrain = Drivetrain.getInstance();
@@ -92,7 +92,7 @@ public class RobotContainer {
         // intake = Intake.getInstance();
         wrist = Wrist.getInstance();
         intake = Intake.getInstance();
-        limelight = NetworkTableInstance.getDefault().getTable("limelight-intake");
+        limelight = NetworkTableInstance.getDefault().getTable("limelight"); //need to change
         setLEDMode(LEDMode.ON);
 
         drivetrain.resetEncoders();
@@ -120,9 +120,11 @@ public class RobotContainer {
         // driver_LB
         //     .whileTrue(new RepeatCommand(new RunCommand(() -> arm.setOpenLoop(-0.1), arm)))
         //     .onFalse(new RunCommand(() -> arm.stopArm(), arm));
+        // driver_A
+        //     .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
+        //     .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         driver_A
-            .whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(0.1), wrist)))
-            .onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
+            .whileTrue(new RunCommand(() -> new GridTrack())); //might not stop, need to test
         driver_B
             //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(0.4), wrist)))
             //.onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
@@ -310,8 +312,8 @@ public class RobotContainer {
 
     
     public static Trajectory smallTraj = new Trajectory();
-    private static final String smallJSON = "paths/Small.wpilib.json";
-    private static final String[] auto1JSON = {"paths/Auto1.wpilib.json", "paths/Auto2.wpilib.json", "paths/Auto3.wpilib.json"};
+    private static final String smallJSON = "Pathweaver/output/autoTEST1.wpilib.json";
+    private static final String[] auto1JSON = {"Pathweaver/output/filename.wpilib.json"};
     public static Trajectory[] autoGroup1 = new Trajectory[3];
 
     public static Trajectory initializeTrajectory(final String tjson) {
@@ -472,10 +474,11 @@ public class RobotContainer {
         return -limelight.getEntry("tx").getDouble(0);
     }
     
-    public static double getDistance() {
+    public static double getDistance() { // u need to do some math realquick
+        double mountAngle = arm.getPosition(); //yessir
         double offsetAngle = limelight.getEntry("ty").getDouble(0.0);
-        double angleGoalRads = (VisionConstants.mountAngle + offsetAngle) * (Math.PI/180);
-        return Units.InchesToMeters(VisionConstants.goalHeightInches - VisionConstants.limelightHeightInches)/(Math.tan(angleGoalRads));
+        double angleGoalRads = (mountAngle + offsetAngle) * (Math.PI/180);
+        return Units.InchesToMeters(VisionConstants.goalHeightInches - VisionConstants.limelightHeightInches)/(Math.tan(angleGoalRads)); //limelight h inches not constant
     }
     /**
      * Returns the vertical offset between the target and the crosshair in degrees

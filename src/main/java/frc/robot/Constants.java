@@ -147,15 +147,7 @@ public class Constants {
 
 
     public static class VisionConstants {
-        /*
-            Servo Constants
-        */
-        //public static final int servoChannel = 0;
-
-        /* Color Sensor Constants */
-        public static final int minimumProximity = 450;
-        public static final double minimumSimilarity = 0.6;
-
+       
         /* Turn PID Constants */
         public static double kPTurn = 0.1;
         public static double kITurn = 0;
@@ -169,7 +161,7 @@ public class Constants {
         public static double kDistTolerance = 0;
         public static double kYDesired = 0.0; //For proper shooting distance
         /* For calculating distance from goal */
-        public static double mountAngle = 48; //TODO: verify distance constants
+        // public static double mountAngle = 48; //TODO: verify distance constants
         public static double goalHeightInches = 104;
         public static double limelightHeightInches = 25.5;
     }

@@ -125,7 +125,7 @@ public class Arm extends ProfiledPIDSubsystem {
         //super.periodic();
         //SmartDashboard.putNumber("absolut encoder", armEncoder.getPosition());
         //SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()*360.0/100.0); //johnny and charles r dumb
-        SmartDashboard.putNumber("Arm encoder value", relArmEncoder.getPosition());
+        SmartDashboard.putNumber("Arm encoder value", getPosition()); //was relArmEncoder.getPosition();
         SmartDashboard.putNumber("Arm measurement", getMeasurement());
         if (RobotContainer.getOperatorRightY() > 0.0) setOpenLoop(0.1);
         else if (RobotContainer.getOperatorRightY() < 0.0) setOpenLoop(-0.1);
@@ -141,7 +141,9 @@ public class Arm extends ProfiledPIDSubsystem {
         //return armEncoder.getPosition();
         return 0;
     }
-    
+    public double getPosition() { //added for limelight vision stuff
+        return relArmEncoder.getPosition(); //TODO: check if this returns degrees and if its accurate
+    }
     /**
      * Uses the value calculated by ProfiledPIDSubsystem
      */

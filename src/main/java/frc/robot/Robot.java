@@ -70,6 +70,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().schedule(m_chooser.getSelected());
     System.out.println("Auto selected: " + m_autoSelected);
     RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST);
+    CommandScheduler.getInstance().schedule(RobotContainer.getPathweaverCommand(RobotContainer.smallTraj));
   }
 
   /** This function is called periodically during autonomous. */

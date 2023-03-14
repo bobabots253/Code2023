@@ -1,5 +1,5 @@
 package frc.robot.commands;
-
+//thank you william our lord and savior
 import java.util.Set;
 
 import edu.wpi.first.math.controller.PIDController;
@@ -37,7 +37,7 @@ public class GridTrack implements Command {
     public void initialize() {
         timeframe.reset();
         RobotContainer.getInstance().setLEDMode(LEDMode.ON);
-        RobotContainer.getInstance().setPipeline(IntakeVisionPipeline.ROBOT);
+        RobotContainer.getInstance().setPipeline(IntakeVisionPipeline.ROBOT);//we will only have 1 pipeline
     }
 
     boolean atTarget;
@@ -85,7 +85,7 @@ public class GridTrack implements Command {
     @Override
     public void end(boolean interrupted) {
         RobotContainer.getInstance().setLEDMode(LEDMode.ON);
-        RobotContainer.getInstance().setPipeline(IntakeVisionPipeline.DRIVER);
+        RobotContainer.getInstance().setPipeline(IntakeVisionPipeline.DRIVER); //change
         Drivetrain.setOpenLoop(0.0, 0.0);
         timeframe.reset();
     }

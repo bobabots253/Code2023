@@ -1,0 +1,9 @@
+{
+  "lengthUnit": "Meter",
+  "exportUnit": "Always Meters",
+  "maxVelocity": 3.726,
+  "maxAcceleration": 1.0,
+  "trackWidth": 0.64,
+  "gameName": "Charged Up",
+  "outputDir": "../src/main/java/frc/robot/Pathweaver"
+}

@@ -18,9 +18,7 @@ public class Intake implements Subsystem {
     }
     @Override
     public void periodic() {
-        /*
-        What should happen periodically?
-         */
+        
     }
 
     public void set(double value) {
