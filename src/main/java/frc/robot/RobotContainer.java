@@ -175,10 +175,10 @@ public class RobotContainer {
             .onTrue(new RunCommand(() -> intake.set(-.75), wrist))
             .onFalse(new RunCommand(() -> intake.set(0), wrist));
 
-        double LTvalue = operatorController.getLeftTriggerAxis();
-        double RTvalue = operatorController.getRightTriggerAxis();
-        double rstick = operatorController.getRightY();
-        double lstick = operatorController.getLeftY();
+        // double LTvalue = operatorController.getLeftTriggerAxis();
+        // double RTvalue = operatorController.getRightTriggerAxis();
+        // double rstick = operatorController.getRightY();
+        // double lstick = operatorController.getLeftY();
 
         // if (lstick > 0.0) {
         //     arm.setOpenLoop(0.2);

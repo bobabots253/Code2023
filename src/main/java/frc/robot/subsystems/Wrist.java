@@ -106,6 +106,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         SmartDashboard.putNumber("WRIST: Current angle", wristEncoder.getPosition()*360.0/WristConstants.gearRatio);
         SmartDashboard.putNumber("WRIST: absolute angle", wristAbsolulteEncoder.getPosition()*36000.0/WristConstants.gearRatio);
         SmartDashboard.putNumber("WRIST: absolute position", wristAbsolulteEncoder.getPosition());
+        
 
         if (RobotContainer.getOperatorLeftY() > 0.0) setWrist(0.1);
         else if (RobotContainer.getOperatorLeftY() < 0.0) setWrist(-0.1);

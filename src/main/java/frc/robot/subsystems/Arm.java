@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.ProfiledPIDSubsystem;
 public class Arm extends ProfiledPIDSubsystem {
     private static final CANSparkMax motorR = Util.createSparkMAX(3, MotorType.kBrushless);
     private static final CANSparkMax motorL = Util.createSparkMAX(1, MotorType.kBrushless);
-    //private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
+    private SparkMaxAbsoluteEncoder armEncoder = motorR.getAbsoluteEncoder(Type.kDutyCycle);
     private RelativeEncoder relArmEncoder = motorR.getEncoder();
     //private static final Encoder armEncoder = new Encoder(4,3);
 
@@ -169,5 +169,14 @@ public class Arm extends ProfiledPIDSubsystem {
     public void setArmPosition(double position) {
         pidController.setReference(position, ControlType.kPosition);
         SmartDashboard.putNumber("Arm SetPoint", position);
+    }
+
+    public void setArmPositionDegree(double degreePosition) { //define degreePosition earlier
+        double convertDeg = 11.375;
+        double encoderPosition = degreePosition*convertDeg; //degree to encoder
+        double currentPosition = armEncoder.getPosition(); 
+        SmartDashboard.putNumber("degreePosition", degreePosition);
+        SmartDashboard.putNumber("encoder value", encoderPosition);
+        SmartDashboard.putNumber("current arm position", currentPosition);
     }
 }
