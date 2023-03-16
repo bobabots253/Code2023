@@ -98,7 +98,7 @@ public class RobotContainer {
         drivetrain.resetEncoders();
 
         bindOI();
-        initTrajectories();
+        //initTrajectories();
 
         ledStrip.set(0.81); //color: Aqua 
     }
@@ -169,10 +169,10 @@ public class RobotContainer {
 
         // Cube Intake/Outtake Action
         operator_RB
-            .onTrue(new RunCommand(() -> intake.set(.75), wrist))
+            .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
             .onFalse(new RunCommand(() -> intake.set(0), wrist));
         operator_LB
-            .onTrue(new RunCommand(() -> intake.set(-.75), wrist))
+            .onTrue(new RunCommand(() -> intake.set(-.9), wrist))
             .onFalse(new RunCommand(() -> intake.set(0), wrist));
 
         // double LTvalue = operatorController.getLeftTriggerAxis();
