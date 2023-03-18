@@ -93,7 +93,7 @@ public class Arm extends ProfiledPIDSubsystem {
         pidController.setD(ArmConstants.kD);
         pidController.setIZone(0);
         pidController.setFF(0);
-        pidController.setOutputRange(-0.3, 0.3);
+        pidController.setOutputRange(-0.75, 0.75);
         register();
     }
 
@@ -127,9 +127,9 @@ public class Arm extends ProfiledPIDSubsystem {
         //SmartDashboard.putNumber("encoder value", relArmEncoder.getPosition()*360.0/100.0); //johnny and charles r dumb
         SmartDashboard.putNumber("Arm encoder value", getPosition()); //was relArmEncoder.getPosition();
         SmartDashboard.putNumber("Arm measurement", getMeasurement());
-        if (RobotContainer.getOperatorRightY() > 0.0) setOpenLoop(0.1);
-        else if (RobotContainer.getOperatorRightY() < 0.0) setOpenLoop(-0.1);
-        else stopArm();
+        // if (RobotContainer.getOperatorRightY() > 0.0) setOpenLoop(0.1);
+        // else if (RobotContainer.getOperatorRightY() < 0.0) setOpenLoop(-0.1);
+        // else stopArm();
         
     }
     
@@ -150,7 +150,7 @@ public class Arm extends ProfiledPIDSubsystem {
     @Override
     public void useOutput(double output, TrapezoidProfile.State setpoint) {
         // Calculate feedforward from the setpoint
-        //FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);
+        //Flculate(setpoiEEDFORWARD.cant.position, setpoint.velocity);
         // Set motor, converting voltage to percent voltage
 
         double feedforward = FEEDFORWARD.calculate(setpoint.position, setpoint.velocity);

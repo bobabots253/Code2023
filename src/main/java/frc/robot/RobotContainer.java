@@ -60,12 +60,12 @@ public class RobotContainer {
     private static RobotContainer instance = null;
     private static final XboxController driverController = new XboxController(Constants.InputPorts.driverController);
     private static final XboxController operatorController = new XboxController(Constants.InputPorts.operatorController);
-    private static final Trigger driver_A = new JoystickButton(driverController, 1),
+    public static final Trigger driver_A = new JoystickButton(driverController, 1),
         driver_B = new JoystickButton(driverController, 2), driver_X = new JoystickButton(driverController, 3),
         driver_Y = new JoystickButton(driverController, 4), driver_LB = new JoystickButton(driverController, 5),
         driver_RB = new JoystickButton(driverController, 6), driver_VIEW = new JoystickButton(driverController, 7),
         driver_MENU = new JoystickButton(driverController, 8);
-    private static final Trigger operator_A = new JoystickButton(operatorController, 1),
+    public static final Trigger operator_A = new JoystickButton(operatorController, 1),
         operator_B = new JoystickButton(operatorController, 2), operator_X = new JoystickButton(operatorController, 3),
         operator_Y = new JoystickButton(operatorController, 4), operator_LB = new JoystickButton(operatorController, 5),
         operator_RB = new JoystickButton(operatorController, 6), operator_VIEW = new JoystickButton(operatorController, 7),
@@ -141,13 +141,19 @@ public class RobotContainer {
         // Cube Intake Positions
         operator_Y
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeHighScorePosition), arm))
-            .whileTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist));
+            .whileTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
         operator_A
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeFloorIntakePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
         operator_X
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeMidScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeMidScorePosition), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeMidScorePosition), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
         operator_B
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
             .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
@@ -155,25 +161,41 @@ public class RobotContainer {
         // Cone Intake Positions
         operator_DPAD_UP
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
         operator_DPAD_RIGHT
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeMidUprightScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeMidUprightScorePosition), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeMidUprightScorePosition), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
             //TODO not sure if this should be mid upright or mid sideways, see #programming
         operator_DPAD_LEFT
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorSidewaysIntakePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorSidewaysIntakePosition), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorSidewaysIntakePosition), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
         operator_DPAD_DOWN
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorUprightIntakePosition), arm))
-            .onTrue (new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorUprightIntakePosition), wrist));
+            .onTrue (new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorUprightIntakePosition), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         // Cube Intake/Outtake Action
         operator_RB
-            .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
+            .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
             .onFalse(new RunCommand(() -> intake.set(0), wrist));
         operator_LB
-            .onTrue(new RunCommand(() -> intake.set(-.9), wrist))
+            .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
             .onFalse(new RunCommand(() -> intake.set(0), wrist));
+
+        driver_RB
+            .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
+            .onFalse(new RunCommand(() -> intake.set(0), wrist));
+        driver_LB
+            .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
+            .onFalse(new RunCommand(() -> intake.set(0), wrist));
+
 
         // double LTvalue = operatorController.getLeftTriggerAxis();
         // double RTvalue = operatorController.getRightTriggerAxis();

@@ -12,7 +12,7 @@ import frc.robot.Constants.WristConstants;
 public class Intake implements Subsystem {
 
     private static final CANSparkMax intakeMotor = Util.createSparkMAX(WristConstants.intakeMotor, MotorType.kBrushless);
-
+    private static int count = 0;
     private static Intake instance;
     public static Intake getInstance(){
         if (instance == null) instance = new Intake();
@@ -29,21 +29,22 @@ public class Intake implements Subsystem {
         What should happen periodically?
          */
 
-        double LTvalue = RobotContainer.getOperatorLT();
-        double RTvalue = RobotContainer.getOperatorRT();
-        if(LTvalue > 0. && RTvalue == 0.){
-            set(-0.75);
-        }else if(LTvalue == 0 && RTvalue ==0){
-            set(0.);
-        }
+        // double LTvalue = RobotContainer.getOperatorLT();
+        // double RTvalue = RobotContainer.getOperatorRT();
+        // if(LTvalue > 0. && RTvalue == 0.){
+        //     set(-0.75);
+        // }else if(LTvalue == 0 && RTvalue ==0){
+        //     set(0.);
+        // }
         
 
-        if(RTvalue > 0. && LTvalue == 0.){
-            set(0.75);
-        }else if (LTvalue==0 && RTvalue == 0){
-            set(0.);
-        }
-        SmartDashboard.putNumber("RTval", RTvalue);
+        // if(RTvalue > 0. && LTvalue == 0.){
+        //     set(0.75);
+        // }else if (LTvalue==0 && RTvalue == 0){
+        //     set(0.);
+        // }
+        // SmartDashboard.putNumber("RTval", RTvalue);
+
         
     }
 
@@ -78,8 +79,14 @@ public class Intake implements Subsystem {
     }
     public void setHold(double value) {
         double current = intakeMotor.getOutputCurrent();
-        intakeMotor.setSmartCurrentLimit(40);
         intakeMotor.set(value);
+        int limit = 40;
+        int lowLim = 20;
+        if (current > limit) {
+            intakeMotor.set(value/3.);
+        } else {
+            intakeMotor.set(value);
+        }
        
     }
     /**
