@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
@@ -14,13 +15,16 @@ public class Intake implements Subsystem {
 
     private static final CANSparkMax intakeMotor = Util.createSparkMAX(WristConstants.intakeMotor, MotorType.kBrushless);
     private static int LBcount = 0, RBcount = 0;
+    private static LinearFilter filter;
     private static Intake instance;
+    private static boolean cone;
     public static Intake getInstance(){
         if (instance == null) instance = new Intake();
         return instance;
     }
 
     public Intake(){
+        filter = LinearFilter.movingAverage(30);
         register();
     }
 
@@ -46,33 +50,34 @@ public class Intake implements Subsystem {
         // }
         // SmartDashboard.putNumber("RTval", RTvalue);
         SmartDashboard.putNumber("INTAKE CURRENT", intakeMotor.getOutputCurrent());
+        SmartDashboard.putNumber("INTAKE Voltage", intakeMotor.getAppliedOutput());
         if (RobotContainer.driverController.getLeftBumperPressed() || RobotContainer.operatorController.getLeftBumperPressed()) {
             LBcount++;
             set(0.9);
             intakeMotor.setSmartCurrentLimit(35);
+            cone = true;
         }
         if (LBcount == 2) {
             set(0.);
             LBcount = 0;
         }
-        
-        if (intakeMotor.getOutputCurrent() > 15.0) {
-            intakeMotor.setSmartCurrentLimit(10);
-            set(.1);
+        double filterOutput = filter.calculate(intakeMotor.getOutputCurrent());
+        SmartDashboard.putNumber("INTAKE filtered output", filterOutput);
+        if (filterOutput > 15.0) {
+            intakeMotor.setSmartCurrentLimit(1);
+            if (cone) set(.1);
+            else set(-.1);
         }
 
         if (RobotContainer.driverController.getRightBumperPressed() || RobotContainer.operatorController.getRightBumperPressed()) {
             RBcount++;
-            set(0.9);
+            set(-0.9);
+            cone = false;
             intakeMotor.setSmartCurrentLimit(35);
         }
         if (RBcount == 2) {
             set(0.);
-            LBcount = 0;
-        }
-        if (intakeMotor.getOutputCurrent() > 15.0) {
-            set(.1);
-            intakeMotor.setSmartCurrentLimit(10);
+            RBcount = 0;
         }
 
         

@@ -182,19 +182,19 @@ public class RobotContainer {
             .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         // Cube Intake/Outtake Action
-        operator_RB
-            .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
-            .onFalse(new RunCommand(() -> intake.set(0), wrist));
-        operator_LB
-            .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
-            .onFalse(new RunCommand(() -> intake.set(0), wrist));
+        // operator_RB
+          //   .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
+        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
+        // operator_LB
+        //     .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
+        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
 
-        driver_RB
-            .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
-            .onFalse(new RunCommand(() -> intake.set(0), wrist));
-        driver_LB
-            .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
-            .onFalse(new RunCommand(() -> intake.set(0), wrist));
+        // driver_RB
+        //     .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
+        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
+        // driver_LB
+        //     .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
+        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
 
 
         // double LTvalue = operatorController.getLeftTriggerAxis();
