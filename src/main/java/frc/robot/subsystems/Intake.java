@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Timer;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.Util;
 import com.revrobotics.CANSparkMax;
@@ -12,7 +13,7 @@ import frc.robot.Constants.WristConstants;
 public class Intake implements Subsystem {
 
     private static final CANSparkMax intakeMotor = Util.createSparkMAX(WristConstants.intakeMotor, MotorType.kBrushless);
-    private static int count = 0;
+    private static int LBcount = 0, RBcount = 0;
     private static Intake instance;
     public static Intake getInstance(){
         if (instance == null) instance = new Intake();
@@ -44,6 +45,35 @@ public class Intake implements Subsystem {
         //     set(0.);
         // }
         // SmartDashboard.putNumber("RTval", RTvalue);
+        SmartDashboard.putNumber("INTAKE CURRENT", intakeMotor.getOutputCurrent());
+        if (RobotContainer.driverController.getLeftBumperPressed() || RobotContainer.operatorController.getLeftBumperPressed()) {
+            LBcount++;
+            set(0.9);
+            intakeMotor.setSmartCurrentLimit(35);
+        }
+        if (LBcount == 2) {
+            set(0.);
+            LBcount = 0;
+        }
+        
+        if (intakeMotor.getOutputCurrent() > 15.0) {
+            intakeMotor.setSmartCurrentLimit(10);
+            set(.1);
+        }
+
+        if (RobotContainer.driverController.getRightBumperPressed() || RobotContainer.operatorController.getRightBumperPressed()) {
+            RBcount++;
+            set(0.9);
+            intakeMotor.setSmartCurrentLimit(35);
+        }
+        if (RBcount == 2) {
+            set(0.);
+            LBcount = 0;
+        }
+        if (intakeMotor.getOutputCurrent() > 15.0) {
+            set(.1);
+            intakeMotor.setSmartCurrentLimit(10);
+        }
 
         
     }

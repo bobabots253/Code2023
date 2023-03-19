@@ -58,8 +58,8 @@ import frc.robot.commands.GridTrack;
 
 public class RobotContainer {
     private static RobotContainer instance = null;
-    private static final XboxController driverController = new XboxController(Constants.InputPorts.driverController);
-    private static final XboxController operatorController = new XboxController(Constants.InputPorts.operatorController);
+    public static final XboxController driverController = new XboxController(Constants.InputPorts.driverController);
+    public static final XboxController operatorController = new XboxController(Constants.InputPorts.operatorController);
     public static final Trigger driver_A = new JoystickButton(driverController, 1),
         driver_B = new JoystickButton(driverController, 2), driver_X = new JoystickButton(driverController, 3),
         driver_Y = new JoystickButton(driverController, 4), driver_LB = new JoystickButton(driverController, 5),

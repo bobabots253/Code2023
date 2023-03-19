@@ -30,7 +30,7 @@ public class Constants {
         public static final double kDriveSens = 1.0; // Overall speed setting (turn down for demos) [0,1]
         public static final double kTurnInPlaceSens = 0.3; // Maximum turn-in-place rate (in percent of max) to allow
                                                             // robot to turn to [0,1]
-        public static final double kTurnSens = 1.0; // Maximum normal turning rate (in percent of max) to allow robot to
+        public static final double kTurnSens = .5; // Maximum normal turning rate (in percent of max) to allow robot to
                                                   // turn to [0,1]
     }
     
