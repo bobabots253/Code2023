@@ -18,6 +18,7 @@ import frc.robot.Autonomous.Auto;
 import frc.robot.commands.DriveXMeters;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -47,6 +48,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto (Move Arm)",
         RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST));
     SmartDashboard.putData("Auto choices", m_chooser);
+    RobotContainer.intake.set(0);
+    RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
   }
 
   /**

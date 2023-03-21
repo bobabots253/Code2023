@@ -150,11 +150,11 @@ public class RobotContainer {
             .onTrue(setArmWrist(Intake.ScorePos.HIGH))
             .onFalse(stow());
          
-        operator_A
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeFloorIntakePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist))
-            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+        // operator_A
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeFloorIntakePosition), arm))
+        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         operator_A
             .onTrue(setArmWrist(Intake.ScorePos.LOW))
