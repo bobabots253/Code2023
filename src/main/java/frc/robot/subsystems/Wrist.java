@@ -137,6 +137,28 @@ public class Wrist extends ProfiledPIDSubsystem {
     //         return false; //(RobotContainer.colorSensorV3.getProximity() >= ConveyorConstants.minimumProximity);
     //     }
     // }
+    
+    public void setWristPositionAuto(Intake.ScorePos position) {
+        double encoderVal = 0.;
+        switch (position) {
+            case HIGH:
+                encoderVal = (Intake.cone) ? WristConstants.kConeHighUprightScorePosition : WristConstants.kCubeHighScorePosition;
+                break;
+            case MID:
+                encoderVal = (Intake.cone) ? WristConstants.kConeMidUprightScorePosition : WristConstants.kCubeMidScorePosition;
+                break;
+            case LOW:
+                encoderVal = (Intake.cone) ? WristConstants.kConeFloorUprightIntakePosition : WristConstants.kCubeFloorIntakePosition;
+                break;
+            case STOW:
+                encoderVal = WristConstants.kStow;
+                break;
+            default:
+                break;
+        }
+        pidController.setReference(encoderVal - WristConstants.initialWristAngle, ControlType.kPosition);
+        SmartDashboard.putNumber("Wrist SetPoint", encoderVal);
+    }
 
     public void setWristPosition(double position) {
         pidController.setReference(position - WristConstants.initialWristAngle, ControlType.kPosition);

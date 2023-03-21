@@ -95,7 +95,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
         new InstantCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake),
         new WaitCommand(1),
-        new RunCommand(() -> Drivetrain.setOpenLoop(-0.27, -0.25), RobotContainer.drivetrain).withTimeout(2),
+        new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1.5),
         new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1)));
   }
 

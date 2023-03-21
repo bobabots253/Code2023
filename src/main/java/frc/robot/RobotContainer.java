@@ -139,24 +139,42 @@ public class RobotContainer {
             .onTrue(new RunCommand(() -> wrist.setWristPosition(2.8), wrist));
 
         // Cube Intake Positions
+
+        // operator_Y
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeHighScorePosition), arm))
+        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+
         operator_Y
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeHighScorePosition), arm))
-            .whileTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist))
-            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+            .onTrue(setArmWrist(Intake.ScorePos.HIGH))
+            .onFalse(stow());
+         
         operator_A
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeFloorIntakePosition), arm))
             .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist))
             .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
             .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+
+        operator_A
+            .onTrue(setArmWrist(Intake.ScorePos.LOW))
+            .onFalse(stow());
+
+        // operator_X
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeMidScorePosition), arm))
+        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeMidScorePosition), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+
         operator_X
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeMidScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeMidScorePosition), wrist))
-            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-        operator_B
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+            .onTrue(setArmWrist(Intake.ScorePos.MID))
+            .onFalse(stow());
+
+        // operator_B
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+
+        operator_B.onTrue(stow());
 
         // Cone Intake Positions
         operator_DPAD_UP
@@ -300,6 +318,17 @@ public class RobotContainer {
     //     operator_MENU.whileHeld(new RunCommand(() -> climber.setLeftMotor(ClimbConstants.climbSens), climber)).whenReleased(climber::stop, climber);
     }
 
+    public static Command setArmWrist(Intake.ScorePos pos) {
+        return new RunCommand(() -> arm.setArmPositionAuto(pos), arm).alongWith(
+               new RunCommand(() -> wrist.setWristPositionAuto(pos), wrist)
+            );
+    }
+
+    public static Command stow() {
+        return new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm).alongWith(
+               new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist)
+            );
+    }
     public static Command getAutonomousCommand(Auto.Selection selectedAuto) { //TODO: change auto based on selected strategy
         Command auto = null;
         switch (selectedAuto) {

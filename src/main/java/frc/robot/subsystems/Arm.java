@@ -165,6 +165,27 @@ public class Arm extends ProfiledPIDSubsystem {
 
     }
 
+    public void setArmPositionAuto(Intake.ScorePos position) {
+        double encoderVal = 0.;
+        switch (position) {
+            case HIGH:
+                encoderVal = (Intake.cone) ? ArmConstants.kConeHighUprightScorePosition : ArmConstants.kCubeHighScorePosition;
+                break;
+            case MID:
+                encoderVal = (Intake.cone) ? ArmConstants.kConeMidUprightScorePosition : ArmConstants.kCubeMidScorePosition;
+                break;
+            case LOW:
+                encoderVal = (Intake.cone) ? ArmConstants.kConeFloorUprightIntakePosition : ArmConstants.kCubeFloorIntakePosition;
+                break;
+            case STOW:
+                encoderVal = ArmConstants.kStow;
+                break;
+            default:
+                break;
+        }
+        pidController.setReference(encoderVal, ControlType.kPosition);
+        SmartDashboard.putNumber("Arm SetPoint", encoderVal);
+    }
 
     public void setArmPosition(double position) {
         pidController.setReference(position, ControlType.kPosition);
