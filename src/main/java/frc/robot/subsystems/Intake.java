@@ -25,7 +25,7 @@ public class Intake implements Subsystem {
     }
 
     public Intake(){
-        filter = LinearFilter.movingAverage(20);
+        filter = LinearFilter.movingAverage(25);
         register();
     }
 
@@ -44,6 +44,9 @@ public class Intake implements Subsystem {
         SmartDashboard.putNumber("INTAKE VOLTAGE", intakeMotor.getAppliedOutput());
         int highcurrlimit = 20;
         int lowcurrlimit = 1;
+
+        SmartDashboard.putBoolean("OPERATOR VIEW", RobotContainer.operator_VIEW.getAsBoolean());
+
         if (RobotContainer.driverController.getLeftBumperPressed() || RobotContainer.operatorController.getLeftBumperPressed()) {
             LBcount++;
             set(0.9);
@@ -60,8 +63,8 @@ public class Intake implements Subsystem {
         SmartDashboard.putNumber("INTAKE filtered output", filterOutput);
         if (filterOutput > 15.0) {
             intakeMotor.setSmartCurrentLimit(lowcurrlimit);
-            if (cone) set(.1);
-            else set(-.1);
+            if (cone) set(.05);
+            else set(-.05);
         }
 
         if (RobotContainer.driverController.getRightBumperPressed() || RobotContainer.operatorController.getRightBumperPressed()) {

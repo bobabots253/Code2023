@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -94,7 +95,7 @@ public class RobotContainer {
         intake = Intake.getInstance();
         limelight = NetworkTableInstance.getDefault().getTable("limelight"); //need to change
         setLEDMode(LEDMode.ON);
-
+        
         drivetrain.resetEncoders();
 
         bindOI();
@@ -147,9 +148,11 @@ public class RobotContainer {
         //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         operator_Y
-            .onTrue(setArmWrist(Intake.ScorePos.HIGH))
-            .onFalse(stow());
-         
+            .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.HIGH), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.HIGH), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist));
+
         // operator_A
         //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeFloorIntakePosition), arm))
         //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeFloorIntakePosition), wrist))
@@ -157,8 +160,13 @@ public class RobotContainer {
         //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         operator_A
-            .onTrue(setArmWrist(Intake.ScorePos.LOW))
-            .onFalse(stow());
+            // .onTrue(setArmWrist(Intake.ScorePos.LOW))
+            // .onFalse(stow());
+            .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist));
+            
 
         // operator_X
         //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeMidScorePosition), arm))
@@ -167,14 +175,16 @@ public class RobotContainer {
         //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         operator_X
-            .onTrue(setArmWrist(Intake.ScorePos.MID))
-            .onFalse(stow());
+        .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.MID), arm))
+        .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.MID), wrist))
+        .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
+        .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist));
 
-        // operator_B
-        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+        operator_B
+            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
-        operator_B.onTrue(stow());
+        // operator_B.onTrue(stow());
 
         // Cone Intake Positions
         operator_DPAD_UP
