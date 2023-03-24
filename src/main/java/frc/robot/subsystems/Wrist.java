@@ -109,9 +109,9 @@ public class Wrist extends ProfiledPIDSubsystem {
         SmartDashboard.putNumber("WRIST: absolute position", wristAbsolulteEncoder.getPosition());
         
 
-        if (RobotContainer.getOperatorLeftY() > 0.0) setWrist(0.1);
-        else if (RobotContainer.getOperatorLeftY() < 0.0) setWrist(-0.1);
-        else setWrist(0);
+        // if (RobotContainer.getOperatorLeftY() > 0.0) setWrist(0.1);
+        // else if (RobotContainer.getOperatorLeftY() < 0.0) setWrist(-0.1);
+        // else setWrist(0);
         
 
     }

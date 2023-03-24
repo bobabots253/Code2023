@@ -42,6 +42,24 @@ public class Intake implements Subsystem {
        
         SmartDashboard.putNumber("INTAKE CURRENT", intakeMotor.getOutputCurrent());
         SmartDashboard.putNumber("INTAKE VOLTAGE", intakeMotor.getAppliedOutput());
+        SmartDashboard.putBoolean("INTAKE running", running);
+
+        if (RobotContainer.getOperatorLT() > 0 && RobotContainer.getOperatorRT() == 0) {
+            SmartDashboard.putNumber("OPERATOR LT", RobotContainer.getOperatorLT());
+            intakeMotor.setSmartCurrentLimit(20);
+            set(-0.5);
+
+        }
+        
+        if (RobotContainer.getOperatorRT() > 0 && RobotContainer.getOperatorLT() == 0) {
+            intakeMotor.setSmartCurrentLimit(20);
+            set(0.5);
+        }
+
+        if (RobotContainer.getOperatorLT() == 0 && RobotContainer.getOperatorRT() == 0 && !running) {
+            set(0.);
+        }
+
         int highcurrlimit = 20;
         int lowcurrlimit = 1;
 

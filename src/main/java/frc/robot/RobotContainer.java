@@ -182,32 +182,56 @@ public class RobotContainer {
 
         operator_B
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist));
 
         // operator_B.onTrue(stow());
 
-        // Cone Intake Positions
-        operator_DPAD_UP
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist))
-            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-        operator_DPAD_RIGHT
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeMidUprightScorePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeMidUprightScorePosition), wrist))
-            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-            //TODO not sure if this should be mid upright or mid sideways, see #programming
-        operator_DPAD_LEFT
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorSidewaysIntakePosition), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorSidewaysIntakePosition), wrist))
-            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-        operator_DPAD_DOWN
-            .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorUprightIntakePosition), arm))
-            .onTrue (new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorUprightIntakePosition), wrist))
-            .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+        // manual wrist and arm positioning
+        operator_DPAD_UP.whileTrue(
+            new RunCommand(() -> wrist.setWrist(0.1), wrist)
+        ).onFalse(
+            new RunCommand(() -> wrist.stopWrist(), wrist)
+        );
+
+        operator_DPAD_DOWN.whileTrue(
+            new RunCommand(() -> wrist.setWrist(-0.1), wrist)
+        ).onFalse(
+            new RunCommand(() -> wrist.stopWrist(), wrist)
+        );
+
+        operator_DPAD_RIGHT.whileTrue(
+            new RunCommand(() -> arm.setOpenLoop(0.1), arm)
+        ).onFalse(
+            new RunCommand(() -> arm.stopArm(), arm)
+        );
+
+        operator_DPAD_LEFT.whileTrue(
+            new RunCommand(() -> arm.setOpenLoop(-0.1), arm)
+        ).onFalse(
+            new RunCommand(() -> arm.stopArm(), arm)
+        );
+
+        // operator_DPAD_UP
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
+        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+        // operator_DPAD_RIGHT
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeMidUprightScorePosition), arm))
+        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeMidUprightScorePosition), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+        //     //TODO not sure if this should be mid upright or mid sideways, see #programming
+        // operator_DPAD_LEFT
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorSidewaysIntakePosition), arm))
+        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorSidewaysIntakePosition), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+        // operator_DPAD_DOWN
+        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorUprightIntakePosition), arm))
+        //     .onTrue (new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorUprightIntakePosition), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         // Cube Intake/Outtake Action
         // operator_RB

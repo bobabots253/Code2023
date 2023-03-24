@@ -96,6 +96,8 @@ public class Robot extends TimedRobot {
 
     // CommandScheduler.getInstance().schedule(RobotContainer.getPathweaverCommand(RobotContainer.smallTraj));
     CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
+        new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
+        new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
         new InstantCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake),
         new WaitCommand(1),
         new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1.5),

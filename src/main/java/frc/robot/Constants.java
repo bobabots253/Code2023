@@ -30,7 +30,7 @@ public class Constants {
         public static final double kDriveSens = 1.0; // Overall speed setting (turn down for demos) [0,1]
         public static final double kTurnInPlaceSens = 0.5; // Maximum turn-in-place rate (in percent of max) to allow
                                                             // robot to turn to [0,1]
-        public static final double kTurnSens = .75; // Maximum normal turning rate (in percent of max) to allow robot to
+        public static final double kTurnSens = .65; // Maximum normal turning rate (in percent of max) to allow robot to
                                                   // turn to [0,1]
     }
     
@@ -59,15 +59,15 @@ public class Constants {
         public static int gearRatio = 25;
 
         //arm encoder values
-        public static final double kCubeFloorIntakePosition = -5.285;
-        public static final double kCubeMidScorePosition = -18.023;
-        public static final double kCubeHighScorePosition = -27.286;
-        public static final double kConeFloorUprightIntakePosition = -2.071;
-        public static final double kConeFloorSidewaysIntakePosition = -1.786;
-        public static final double kConeMidUprightScorePosition = -19.047;
-        public static final double kConeMidSidewaysScorePosition = -17.286;
-        public static final double kConeHighUprightScorePosition = -28.0;
-        public static final double kStow = 0.0;
+        public static final double kCubeFloorIntakePosition = -5.285 - 7.35716;
+        public static final double kCubeMidScorePosition = -27.499;
+        public static final double kCubeHighScorePosition = -33.499;
+        public static final double kConeFloorUprightIntakePosition = -2.071 - 7.35716;
+        public static final double kConeFloorSidewaysIntakePosition = -1.786; // not used
+        public static final double kConeMidUprightScorePosition = -26.166489;
+        public static final double kConeMidSidewaysScorePosition = -17.286; // not used
+        public static final double kConeHighUprightScorePosition = -30.999;
+        public static final double kStow = -7.35716;
 
 
     }
@@ -87,10 +87,10 @@ public class Constants {
         public static final double kCubeMidScorePosition = 29.381;
         public static final double kCubeHighScorePosition = 37.833;
         public static final double kConeFloorUprightIntakePosition = 23.524;
-        public static final double kConeFloorSidewaysIntakePosition = 35.428;
-        public static final double kConeMidUprightScorePosition = 28.785;
-        public static final double kConeMidSidewaysScorePosition = 20.167;
-        public static final double kConeHighUprightScorePosition = 47.166;
+        public static final double kConeFloorSidewaysIntakePosition = 35.428; // not used
+        public static final double kConeMidUprightScorePosition = 43.3328;
+        public static final double kConeMidSidewaysScorePosition = 20.167; // not used
+        public static final double kConeHighUprightScorePosition = 36.23775;
         public static final double kStow = 0.0;
 
         /* PID Constants */
