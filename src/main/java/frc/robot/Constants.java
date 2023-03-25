@@ -59,15 +59,21 @@ public class Constants {
         public static int gearRatio = 25;
 
         //arm encoder values
-        public static final double kCubeFloorIntakePosition = -5.285 - 7.35716;
+        // arm mid cone = -28.714066
+        // wrist mid cone = 42.428131
+
+        // wrist high cone = 39.761509
+        // arm high cone = -32.071156
+        public static final double kStow = -6.857;
+        public static final double kCubeFloorIntakePosition = -5.285 + kStow;
         public static final double kCubeMidScorePosition = -27.499;
         public static final double kCubeHighScorePosition = -33.499;
-        public static final double kConeFloorUprightIntakePosition = -2.071 - 7.35716;
+        public static final double kConeFloorUprightIntakePosition = -2.071 + kStow;
         public static final double kConeFloorSidewaysIntakePosition = -1.786; // not used
-        public static final double kConeMidUprightScorePosition = -26.166489;
+        public static final double kConeMidScorePosition = -28.714066;
         public static final double kConeMidSidewaysScorePosition = -17.286; // not used
-        public static final double kConeHighUprightScorePosition = -30.999;
-        public static final double kStow = -7.35716;
+        public static final double kConeHighScorePosition = -35;
+        
 
 
     }
@@ -86,11 +92,11 @@ public class Constants {
         public static final double kCubeFloorIntakePosition = 39.166;
         public static final double kCubeMidScorePosition = 29.381;
         public static final double kCubeHighScorePosition = 37.833;
-        public static final double kConeFloorUprightIntakePosition = 23.524;
+        public static final double kConeFloorIntakePosition = 23.524;
         public static final double kConeFloorSidewaysIntakePosition = 35.428; // not used
-        public static final double kConeMidUprightScorePosition = 43.3328;
+        public static final double kConeMidScorePosition = 42.428131;
         public static final double kConeMidSidewaysScorePosition = 20.167; // not used
-        public static final double kConeHighUprightScorePosition = 36.23775;
+        public static final double kConeHighScorePosition = 38.761509;
         public static final double kStow = 0.0;
 
         /* PID Constants */

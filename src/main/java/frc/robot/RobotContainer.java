@@ -182,7 +182,7 @@ public class RobotContainer {
 
         operator_B
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist));
+            .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         // operator_B.onTrue(stow());
 

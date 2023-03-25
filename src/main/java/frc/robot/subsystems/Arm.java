@@ -169,10 +169,10 @@ public class Arm extends ProfiledPIDSubsystem {
         double encoderVal = 0.;
         switch (position) {
             case HIGH:
-                encoderVal = (Intake.cone) ? ArmConstants.kConeHighUprightScorePosition : ArmConstants.kCubeHighScorePosition;
+                encoderVal = (Intake.cone) ? ArmConstants.kConeHighScorePosition : ArmConstants.kCubeHighScorePosition;
                 break;
             case MID:
-                encoderVal = (Intake.cone) ? ArmConstants.kConeMidUprightScorePosition : ArmConstants.kCubeMidScorePosition;
+                encoderVal = (Intake.cone) ? ArmConstants.kConeMidScorePosition : ArmConstants.kCubeMidScorePosition;
                 break;
             case LOW:
                 encoderVal = (Intake.cone) ? ArmConstants.kConeFloorUprightIntakePosition : ArmConstants.kCubeFloorIntakePosition;

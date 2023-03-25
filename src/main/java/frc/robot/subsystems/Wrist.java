@@ -142,13 +142,13 @@ public class Wrist extends ProfiledPIDSubsystem {
         double encoderVal = 0.;
         switch (position) {
             case HIGH:
-                encoderVal = (Intake.cone) ? WristConstants.kConeHighUprightScorePosition : WristConstants.kCubeHighScorePosition;
+                encoderVal = (Intake.cone) ? WristConstants.kConeHighScorePosition : WristConstants.kCubeHighScorePosition;
                 break;
             case MID:
-                encoderVal = (Intake.cone) ? WristConstants.kConeMidUprightScorePosition : WristConstants.kCubeMidScorePosition;
+                encoderVal = (Intake.cone) ? WristConstants.kConeMidScorePosition : WristConstants.kCubeMidScorePosition;
                 break;
             case LOW:
-                encoderVal = (Intake.cone) ? WristConstants.kConeFloorUprightIntakePosition : WristConstants.kCubeFloorIntakePosition;
+                encoderVal = (Intake.cone) ? WristConstants.kConeFloorIntakePosition : WristConstants.kCubeFloorIntakePosition;
                 break;
             case STOW:
                 encoderVal = WristConstants.kStow;
