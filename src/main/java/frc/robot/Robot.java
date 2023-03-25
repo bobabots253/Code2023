@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -45,8 +46,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robot = RobotContainer.getInstance();
     pdp.clearStickyFaults();
-    m_chooser.setDefaultOption("Default Auto (Move Arm)",
-        RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST));
+    // m_chooser.setDefaultOption("Default Auto (Move Arm)",
+    //     RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST));
     SmartDashboard.putData("Auto choices", m_chooser);
     RobotContainer.intake.set(0);
     RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
@@ -87,21 +88,28 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
+    // m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     pdp.clearStickyFaults();
-    CommandScheduler.getInstance().schedule(m_chooser.getSelected());
-    System.out.println("Auto selected: " + m_autoSelected);
-    RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST);
+    // m_chooser.addOption("LOW CONE BACKUP", Auto.lowConeBackup());
+    // m_chooser.addOption("HIGH CONE BACKUP", Auto.highConeBackup());
+    // CommandScheduler.getInstance().schedule(m_chooser.getSelected());
+
+    // System.out.println("Auto selected: " + m_autoSelected);
+    // RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST);
 
     // CommandScheduler.getInstance().schedule(RobotContainer.getPathweaverCommand(RobotContainer.smallTraj));
-    CommandScheduler.getInstance().schedule(new SequentialCommandGroup(
+    CommandScheduler.getInstance().schedule(
+      new SequentialCommandGroup(
         new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
         new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
         new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
         new WaitCommand(.5),
         new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.0),
-        new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1)));
+        new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
+      );
+    //CommandScheduler.getInstance().schedule(Auto.lowConeBackup());
+
   }
 
   /** This function is called periodically during autonomous. */
