@@ -25,7 +25,7 @@ public class Intake implements Subsystem {
     }
 
     public Intake(){
-        filter = LinearFilter.movingAverage(25);
+        filter = LinearFilter.movingAverage(30);
         register();
     }
 
@@ -67,7 +67,7 @@ public class Intake implements Subsystem {
 
         if (RobotContainer.driverController.getLeftBumperPressed() || RobotContainer.operatorController.getLeftBumperPressed()) {
             LBcount++;
-            set(0.9);
+            set(1);
             intakeMotor.setSmartCurrentLimit(highcurrlimit);
             cone = true;
             running = true;
@@ -87,7 +87,7 @@ public class Intake implements Subsystem {
 
         if (RobotContainer.driverController.getRightBumperPressed() || RobotContainer.operatorController.getRightBumperPressed()) {
             RBcount++;
-            set(-0.9);
+            set(-1);
             cone = false;
             intakeMotor.setSmartCurrentLimit(highcurrlimit);
             running = true;

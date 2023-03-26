@@ -162,8 +162,12 @@ public class RobotContainer {
         operator_A
             // .onTrue(setArmWrist(Intake.ScorePos.LOW))
             // .onFalse(stow());
-            .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm))
-            .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist))
+            .whileTrue(new SequentialCommandGroup(
+                new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
+                new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
+            ))
+            // .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm))
+            // .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist))
             .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
             .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist));
             
@@ -352,6 +356,14 @@ public class RobotContainer {
     //     operator_MENU.whileHeld(new RunCommand(() -> climber.setLeftMotor(ClimbConstants.climbSens), climber)).whenReleased(climber::stop, climber);
     }
 
+    public static Command intakeCommand(boolean cone) {
+        double speed = (cone) ? 0.9 : -0.9;
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> intake.set(speed), intake),
+            new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
+            new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
+        );
+    }
     public static Command setArmWrist(Intake.ScorePos pos) {
         return new RunCommand(() -> arm.setArmPositionAuto(pos), arm).alongWith(
                new RunCommand(() -> wrist.setWristPositionAuto(pos), wrist)

@@ -69,7 +69,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         pidController.setIZone(0.1);
         pidController.setFF(0);
         pidController.setOutputRange(-0.6, 0.6);
-        
+        // wristMotor.setSmartCurrentLimit(5);
         //conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
         // conveyorMotor.setInverted(true);
         // conveyorMotor.burnFlash();
@@ -112,6 +112,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         // if (RobotContainer.getOperatorLeftY() > 0.0) setWrist(0.1);
         // else if (RobotContainer.getOperatorLeftY() < 0.0) setWrist(-0.1);
         // else setWrist(0);
+
         
 
     }
@@ -140,28 +141,33 @@ public class Wrist extends ProfiledPIDSubsystem {
     
     public void setWristPositionAuto(Intake.ScorePos position) {
         double encoderVal = 0.;
+        int climit = 5;
         switch (position) {
             case HIGH:
+                wristMotor.setSmartCurrentLimit(climit);
                 encoderVal = (Intake.cone) ? WristConstants.kConeHighScorePosition : WristConstants.kCubeHighScorePosition;
                 break;
             case MID:
+                wristMotor.setSmartCurrentLimit(climit);
                 encoderVal = (Intake.cone) ? WristConstants.kConeMidScorePosition : WristConstants.kCubeMidScorePosition;
                 break;
             case LOW:
+                wristMotor.setSmartCurrentLimit(climit);
                 encoderVal = (Intake.cone) ? WristConstants.kConeFloorIntakePosition : WristConstants.kCubeFloorIntakePosition;
                 break;
             case STOW:
+                wristMotor.setSmartCurrentLimit(20);
                 encoderVal = WristConstants.kStow;
                 break;
             default:
                 break;
         }
-        pidController.setReference(encoderVal - WristConstants.initialWristAngle, ControlType.kPosition);
+        pidController.setReference(encoderVal /*- WristConstants.initialWristAngle*/, ControlType.kPosition);
         SmartDashboard.putNumber("Wrist SetPoint", encoderVal);
     }
 
     public void setWristPosition(double position) {
-        pidController.setReference(position - WristConstants.initialWristAngle, ControlType.kPosition);
+        pidController.setReference(position, ControlType.kPosition);
         SmartDashboard.putNumber("SetWristPoint", position);
     }
 }
