@@ -159,18 +159,31 @@ public class RobotContainer {
         //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
         //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
+        // operator_A
+        //     // .onTrue(setArmWrist(Intake.ScorePos.LOW))
+        //     // .onFalse(stow());
+        //     .whileTrue(new SequentialCommandGroup(
+        //         new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
+        //         new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
+        //     ))
+        //     // .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm))
+        //     // .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist))
+        //     .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
+        //     .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist));
+
+        operator_LB.whileTrue(setConeIntake());
+        operator_RB.onTrue(setCubeIntake());
         operator_A
             // .onTrue(setArmWrist(Intake.ScorePos.LOW))
             // .onFalse(stow());
-            .whileTrue(new SequentialCommandGroup(
-                new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
-                new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
-            ))
+            .onTrue(intakeCommand())
             // .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm))
             // .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist))
             .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
-            .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist));
-            
+            .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist))
+            //.onFalse(new InstantCommand(() -> intake.stopIntake(), intake))
+            .onFalse(runningOff());
+
 
         // operator_X
         //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeMidScorePosition), arm))
@@ -356,13 +369,30 @@ public class RobotContainer {
     //     operator_MENU.whileHeld(new RunCommand(() -> climber.setLeftMotor(ClimbConstants.climbSens), climber)).whenReleased(climber::stop, climber);
     }
 
-    public static Command intakeCommand(boolean cone) {
-        double speed = (cone) ? 0.9 : -0.9;
+    public static Command setConeIntake() {
+        return new InstantCommand(() -> intake.coneIntake(), intake);
+    }
+
+    public static Command setCubeIntake() {
+        return new InstantCommand(() -> intake.cubeIntake(), intake);
+    }
+    public static Command runningOff() {
+        return new InstantCommand(() -> intake.runOff(), intake);
+    }
+    public static Command intakeCommand() {
+        // double sspeed = 0.;
+        // if (Intake.cone) sspeed = 1.;
+        // else sspeed = -1.;
+        //double sspeed = (Intake.cone) ? 1. : -1.;
+        
+        intake.setCurrLimit(30);
+        Intake.running = true;
+        Intake.isReleased = true;
+        //intake.set(speed);
         return new SequentialCommandGroup(
-            new InstantCommand(() -> intake.set(speed), intake),
-            new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
-            new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
-        );
+                new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
+                new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
+            ).alongWith(new RunCommand(() -> intake.setAuto(1.), intake));
     }
     public static Command setArmWrist(Intake.ScorePos pos) {
         return new RunCommand(() -> arm.setArmPositionAuto(pos), arm).alongWith(
