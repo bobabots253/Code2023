@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
     //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
     //   );
 
-    // CommandScheduler.getInstance().schedule(Auto.highConeBackup());
+    CommandScheduler.getInstance().schedule(Auto.xConeBackup(Intake.ScorePos.LOW));
 
   }
 
@@ -135,8 +135,8 @@ public class Robot extends TimedRobot {
     // // Put default auto code here
     // break;
     // }
-    double speed = mAutoBalance.autoBalanceRoutine();
-    Drivetrain.setOpenLoop(speed, speed);
+    // double speed = mAutoBalance.autoBalanceRoutine();
+    // Drivetrain.setOpenLoop(speed, speed);
   }
 
   /** This function is called once when teleop is enabled. */

@@ -157,7 +157,7 @@ public class Wrist extends ProfiledPIDSubsystem {
                 break;
             case STOW:
                 wristMotor.setSmartCurrentLimit(20);
-                encoderVal = WristConstants.kStow;
+                encoderVal = WristConstants.kStow + 0.8;
                 break;
             default:
                 break;

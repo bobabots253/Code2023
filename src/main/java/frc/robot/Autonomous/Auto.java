@@ -55,13 +55,13 @@ public class Auto {
         );
     }
 
-    public static Command highConeBackup() {
+    public static Command xConeBackup(Intake.ScorePos pos) {
+        if (pos == Intake.ScorePos.LOW) return lowConeBackup();
         return new SequentialCommandGroup(
             new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1.),
-            new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.MID), RobotContainer.wrist),
-            new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.MID), RobotContainer.arm),
-            new InstantCommand(() -> Drivetrain.setOpenLoop(0, 0), RobotContainer.drivetrain),
-            new WaitCommand(2.5),
+            new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(pos), RobotContainer.wrist),
+            new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(pos), RobotContainer.arm),
+            new InstantCommand(() -> Drivetrain.setOpenLoop(0, 0), RobotContainer.drivetrain).withTimeout(2.5),
             new RunCommand(() -> Drivetrain.setOpenLoop(0.25, 0.25), RobotContainer.drivetrain).withTimeout(1.),
             new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
             new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(.4),
