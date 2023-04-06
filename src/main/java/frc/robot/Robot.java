@@ -102,7 +102,9 @@ public class Robot extends TimedRobot {
     // RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST);
 
     // CommandScheduler.getInstance().schedule(RobotContainer.getPathweaverCommand(RobotContainer.smallTraj));
-    CommandScheduler.getInstance().schedule(new DriveXMeters(1., 1., 0.5));
+    // CommandScheduler.getInstance().schedule(new DriveXMeters(1., 1., 0.5));
+
+
     // MAIN AUTO
     // CommandScheduler.getInstance().schedule(
     //   new SequentialCommandGroup(
@@ -114,7 +116,7 @@ public class Robot extends TimedRobot {
     //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
     //   );
 
-    // CommandScheduler.getInstance().schedule(Auto.highConeBackup());
+    CommandScheduler.getInstance().schedule(Auto.highConeBackup());
 
   }
 
