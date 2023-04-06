@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Autonomous.Auto;
 import frc.robot.commands.DriveXMeters;
+import frc.robot.commands.TurnXDegrees;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -49,6 +50,8 @@ public class Robot extends TimedRobot {
     // m_chooser.setDefaultOption("Default Auto (Move Arm)",
     //     RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST));
     SmartDashboard.putData("Auto choices", m_chooser);
+    // INITIALIZE TO STOW POSITION
+    RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
     RobotContainer.intake.set(0);
     RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
   }
@@ -99,17 +102,18 @@ public class Robot extends TimedRobot {
     // RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST);
 
     // CommandScheduler.getInstance().schedule(RobotContainer.getPathweaverCommand(RobotContainer.smallTraj));
-
+    CommandScheduler.getInstance().schedule(new DriveXMeters(1., 1., 0.5));
     // MAIN AUTO
-    CommandScheduler.getInstance().schedule(
-      new SequentialCommandGroup(
-        new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
-        new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
-        new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
-        new WaitCommand(.5),
-        new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
-        new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
-      );
+    // CommandScheduler.getInstance().schedule(
+    //   new SequentialCommandGroup(
+    //     new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
+    //     new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
+    //     new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
+    //     new WaitCommand(.5),
+    //     new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
+    //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
+    //   );
+
     // CommandScheduler.getInstance().schedule(Auto.highConeBackup());
 
   }
@@ -131,6 +135,7 @@ public class Robot extends TimedRobot {
   /** This function is called once when teleop is enabled. */
   @Override
   public void teleopInit() {
+    // CommandScheduler.getInstance().schedule(new TurnXDegrees(180, Math.PI, Math.PI/2.));
   }
 
   /** This function is called periodically during operator control. */

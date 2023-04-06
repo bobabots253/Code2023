@@ -60,7 +60,7 @@ public class Drivetrain implements Subsystem {
         SmartDashboard.putNumber("Left Master output: ", getLeftEncVelocityMeters());
         //SmartDashboard.putNumber("Left Slave output: ", leftSlave.getMotorOutputPercent());
         SmartDashboard.putNumber("Right Master output: ", getRightEncVelocityMeters());
-        SmartDashboard.putNumber("NavX heading", RobotContainer.navX.getAngle());
+        SmartDashboard.putNumber("NavX HEADING", RobotContainer.navX.getAngle());
         //SmartDashboard.putNumber("Right Slave output: ", rightSlave.getMotorOutputPercent());
         
     }

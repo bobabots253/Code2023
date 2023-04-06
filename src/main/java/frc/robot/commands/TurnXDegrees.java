@@ -52,7 +52,7 @@ public class TurnXDegrees implements Command {
             DrivetrainConstants.kI, 
             DrivetrainConstants.kD
         );
-        degrees %= 360;
+        degrees %= 360.;
         turnController.setTolerance(5);
         constraints = new TrapezoidProfile.Constraints(angVel, angAcc);
         goal = new TrapezoidProfile.State(degrees, 0.0);
@@ -63,7 +63,7 @@ public class TurnXDegrees implements Command {
     public void initialize() {
         startTime = Timer.getFPGATimestamp();
         drivetrain.resetEncoders();
-        //startAngle = RobotContainer.navX.getAngle();
+        startAngle = RobotContainer.navX.getAngle();
 
     }
 
@@ -83,20 +83,20 @@ public class TurnXDegrees implements Command {
 
         SmartDashboard.putNumber("leftwheel", left);
         SmartDashboard.putNumber("rightwheel", right);
-        // double turn = turnController.calculate(RobotContainer.navX.getAngle() - startAngle, profileCalc.position);
-        // left += turn;
-        // right -= turn;
-        // left += Drivetrain.LEFT_PID_CONTROLLER.calculate(
-        //     RobotContainer.navX.getAngle(), 
-        //     profileCalc.position
-        // );
-        // right += Drivetrain.RIGHT_PID_CONTROLLER.calculate(
-        //     RobotContainer.navX.getAngle(), 
-        //     profileCalc.position
-        // );
+        double turn = turnController.calculate(RobotContainer.navX.getAngle() - startAngle, profileCalc.position);
+        left += turn;
+        right -= turn;
+        left += Drivetrain.LEFT_PID_CONTROLLER.calculate(
+            RobotContainer.navX.getAngle(), 
+            profileCalc.position
+        );
+        right += Drivetrain.RIGHT_PID_CONTROLLER.calculate(
+            RobotContainer.navX.getAngle(), 
+            profileCalc.position
+        );
         Drivetrain.setOpenLoop(left/ Constants.kMaxVoltage, right / Constants.kMaxVoltage);
         SmartDashboard.putString("TurnXFinishedalt", "No");
-        //profile = new TrapezoidProfile(constraints, goal, profileCalc);
+        profile = new TrapezoidProfile(constraints, goal, profileCalc);
     }
 
     @Override 

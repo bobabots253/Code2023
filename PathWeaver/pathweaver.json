@@ -5,5 +5,5 @@
   "maxAcceleration": 1.0,
   "trackWidth": 0.64,
   "gameName": "Charged Up",
-  "outputDir": "../src/main/java/frc/robot/Pathweaver"
+  "outputDir": "../src/main/deploy"
 }

@@ -57,13 +57,16 @@ public class Auto {
 
     public static Command highConeBackup() {
         return new SequentialCommandGroup(
-            new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(.4),
-            new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.HIGH), RobotContainer.wrist),
-            new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.HIGH), RobotContainer.arm),
-            new RunCommand(() -> Drivetrain.setOpenLoop(0.25, 0.25), RobotContainer.drivetrain).withTimeout(.4),
+            new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1.),
+            new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.MID), RobotContainer.wrist),
+            new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.MID), RobotContainer.arm),
+            new InstantCommand(() -> Drivetrain.setOpenLoop(0, 0), RobotContainer.drivetrain),
+            new WaitCommand(2.5),
+            new RunCommand(() -> Drivetrain.setOpenLoop(0.25, 0.25), RobotContainer.drivetrain).withTimeout(1.),
             new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
             new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(.4),
             new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1),
+            new WaitCommand(2.),
             new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
             new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
             new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1.0)

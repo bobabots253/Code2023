@@ -75,7 +75,7 @@ public class RobotContainer {
     operator_DPAD_RIGHT = new POVButton(operatorController, 90), operator_DPAD_DOWN = new POVButton(operatorController, 180),
     operator_DPAD_LEFT = new POVButton(operatorController, 270);
     public static NetworkTable limelight;
-    private static final Spark ledStrip = new Spark(0);
+    // private static final Spark ledStrip = new Spark(0);
 
     public static Drivetrain drivetrain;
     public static Intake intake;
@@ -85,6 +85,7 @@ public class RobotContainer {
     public static AHRS navX;
     private RobotContainer() {
         navX = new AHRS(Port.kMXP);
+        navX.calibrate();
         drivetrain = Drivetrain.getInstance();
         drivetrain.setDefaultCommand(new Drive(Drive.State.CurvatureDrive2019));
 
@@ -99,17 +100,12 @@ public class RobotContainer {
         drivetrain.resetEncoders();
 
         bindOI();
-        //initTrajectories();
+        initTrajectories();
 
-        ledStrip.set(0.81); //color: Aqua 
+        // ledStrip.set(0.81); //color: Aqua 
     }
     
-    private void initTrajectories() {
-        smallTraj = initializeTrajectory(smallJSON);
-        for(int i = 0; i < autoGroup1.length; i++) {
-        autoGroup1[i] = initializeTrajectory(auto1JSON[i]);
-        }
-    }
+    
 
     private void bindOI() {
 
@@ -439,9 +435,16 @@ public class RobotContainer {
 
     
     public static Trajectory smallTraj = new Trajectory();
-    private static final String smallJSON = "Pathweaver/output/autoTEST1.wpilib.json";
-    private static final String[] auto1JSON = {"Pathweaver/output/filename.wpilib.json"};
-    public static Trajectory[] autoGroup1 = new Trajectory[3];
+    private static final String smallJSON = "output/autoStep1.wpilib.json";
+    private static final String[] auto1JSON = {"output/placeholder.wpilib.json"};
+    public static Trajectory[] autoGroup1 = new Trajectory[1];
+
+    private void initTrajectories() {
+        smallTraj = initializeTrajectory(smallJSON);
+        for(int i = 0; i < autoGroup1.length; i++) {
+            autoGroup1[i] = initializeTrajectory(auto1JSON[i]);
+        }
+    }
 
     public static Trajectory initializeTrajectory(final String tjson) {
         Trajectory t = null;
@@ -449,9 +452,9 @@ public class RobotContainer {
         try {
           t = TrajectoryUtil.fromPathweaverJson(tPath);
         } catch (IOException e) {
-          System.out.println("silly pathweaver bad");
+          System.out.println("PATHWEAVER NOT WORKING !!!!!! HEHEHHA");
           e.printStackTrace();
-          DriverStation.reportError("PATH FAILED", e.getStackTrace());
+          DriverStation.reportError("PATH FAILED, CHECK PATH LOCATION", e.getStackTrace());
         }
         return t;
       }
@@ -476,7 +479,7 @@ public class RobotContainer {
                 .setKinematics(Drivetrain.KINEMATICS)
                 // Apply the voltage constraint
                 .addConstraint(autoVoltageConstraint);
-
+        
         // An example trajectory to follow.  All units in meters.
         RamseteCommand ramseteCommand =
             new RamseteCommand(
@@ -501,9 +504,9 @@ public class RobotContainer {
                     navX.getRotation2d(), Drivetrain.getLeftEnc(), Drivetrain.getRightEnc(), trajectory.getInitialPose()
                 )
             ).andThen(
-                ramseteCommand.andThen(
-                    () -> Drivetrain.setOpenLoop(0, 0)
-                )
+            ramseteCommand.andThen(
+                () -> Drivetrain.setOpenLoop(0, 0)
+            )
         );
     }
 

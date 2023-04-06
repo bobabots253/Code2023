@@ -162,12 +162,12 @@ public class Wrist extends ProfiledPIDSubsystem {
             default:
                 break;
         }
-        pidController.setReference(encoderVal /*- WristConstants.initialWristAngle*/, ControlType.kPosition);
+        pidController.setReference(encoderVal - WristConstants.initialWristAngle, ControlType.kPosition);
         SmartDashboard.putNumber("Wrist SetPoint", encoderVal);
     }
 
     public void setWristPosition(double position) {
-        pidController.setReference(position, ControlType.kPosition);
+        pidController.setReference(position /*- WristConstants.initialWristAngle*/, ControlType.kPosition);
         SmartDashboard.putNumber("SetWristPoint", position);
     }
 }
