@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Autonomous.Auto;
+import frc.robot.Autonomous.AutoBalance;
 import frc.robot.commands.DriveXMeters;
 import frc.robot.commands.TurnXDegrees;
 import frc.robot.subsystems.Arm;
@@ -37,7 +38,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer robot;
   private PowerDistribution pdp = new PowerDistribution();
-
+  private AutoBalance mAutoBalance;
   /**
    * This function is run when the robot is first started up and should be used
    * for any
@@ -54,6 +55,8 @@ public class Robot extends TimedRobot {
     RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
     RobotContainer.intake.set(0);
     RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
+
+    mAutoBalance = new AutoBalance();
   }
 
   /**
@@ -116,7 +119,7 @@ public class Robot extends TimedRobot {
     //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
     //   );
 
-    CommandScheduler.getInstance().schedule(Auto.highConeBackup());
+    // CommandScheduler.getInstance().schedule(Auto.highConeBackup());
 
   }
 
@@ -132,6 +135,8 @@ public class Robot extends TimedRobot {
     // // Put default auto code here
     // break;
     // }
+    double speed = mAutoBalance.autoBalanceRoutine();
+    Drivetrain.setOpenLoop(speed, speed);
   }
 
   /** This function is called once when teleop is enabled. */
