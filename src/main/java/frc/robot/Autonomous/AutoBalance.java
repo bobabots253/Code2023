@@ -97,9 +97,9 @@ public class AutoBalance {
                 if (debounceCount > secondsToTicks(debounceTime)) {
                     state = 1;
                     debounceCount = 0;
-                    return -robotSpeedSlow;
+                    return robotSpeedSlow;
                 }
-                return -robotSpeedFast;
+                return robotSpeedFast;
             // driving up charge station, drive slower, stopping when level
             case 1:
                 if (getTilt() < levelDegree) {
@@ -110,7 +110,7 @@ public class AutoBalance {
                     debounceCount = 0;
                     return 0;
                 }
-                return -robotSpeedSlow;
+                return robotSpeedSlow;
             // on charge station, stop motors and wait for end of auto
             case 2:
                 if (Math.abs(getTilt()) <= levelDegree / 2) {

@@ -52,9 +52,9 @@ public class Robot extends TimedRobot {
     //     RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST));
     SmartDashboard.putData("Auto choices", m_chooser);
     // INITIALIZE TO STOW POSITION
-    RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
-    RobotContainer.intake.set(0);
-    RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
+    // RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
+    // RobotContainer.intake.set(0);
+    // RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
 
     mAutoBalance = new AutoBalance();
   }
@@ -119,7 +119,7 @@ public class Robot extends TimedRobot {
     //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
     //   );
 
-    CommandScheduler.getInstance().schedule(Auto.xConeBackup(Intake.ScorePos.LOW));
+    // CommandScheduler.getInstance().schedule(Auto.xConeBackup(Intake.ScorePos.LOW));
 
   }
 
@@ -135,8 +135,13 @@ public class Robot extends TimedRobot {
     // // Put default auto code here
     // break;
     // }
-    // double speed = mAutoBalance.autoBalanceRoutine();
-    // Drivetrain.setOpenLoop(speed, speed);
+    double speed = mAutoBalance.autoBalanceRoutine();
+    // speed = 0.25;
+    SmartDashboard.putNumber("autobalance SPEED", speed);
+    SmartDashboard.putNumber("autobalance TILT", mAutoBalance.getTilt());
+    SmartDashboard.putNumber("autobalance ROLL", mAutoBalance.getRoll());
+    SmartDashboard.putNumber("autobalance PITCH", mAutoBalance.getPitch());
+    CommandScheduler.getInstance().schedule(new RunCommand(() -> Drivetrain.setOpenLoop(-speed, -speed), RobotContainer.drivetrain));
   }
 
   /** This function is called once when teleop is enabled. */

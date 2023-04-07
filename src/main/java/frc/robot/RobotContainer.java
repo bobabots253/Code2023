@@ -130,10 +130,10 @@ public class RobotContainer {
         //     //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.setWrist(-0.1), wrist)))
         //     //.onFalse(new RunCommand(() -> wrist.stopWrist(), wrist));
         //     .onTrue(new RunCommand(() -> arm.setArmPosition(-16), arm));
-        driver_X
+        operator_MENU
             //.whileTrue(new RepeatCommand(new RunCommand(() -> wrist.intake(-0.4), wrist)))
             //.onFalse(new RunCommand(() -> wrist.stopIntake(), wrist));
-            .onTrue(new RunCommand(() -> wrist.setWristPosition(2.8), wrist));
+            .whileTrue(new GridTrack());
 
         // Cube Intake Positions
 
