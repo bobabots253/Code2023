@@ -172,7 +172,7 @@ public class RobotContainer {
         operator_A
             // .onTrue(setArmWrist(Intake.ScorePos.LOW))
             // .onFalse(stow());
-            .onTrue(intakeCommand())
+            .onTrue(intakeCommandb())
             // .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm))
             // .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist))
             .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
@@ -180,12 +180,6 @@ public class RobotContainer {
             //.onFalse(new InstantCommand(() -> intake.stopIntake(), intake))
             .onFalse(runningOff());
 
-
-        // operator_X
-        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kCubeMidScorePosition), arm))
-        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeMidScorePosition), wrist))
-        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
 
         operator_X
         .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.MID), arm))
@@ -224,145 +218,6 @@ public class RobotContainer {
             new RunCommand(() -> arm.stopArm(), arm)
         );
 
-        // operator_DPAD_UP
-        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeHighUprightScorePosition), arm))
-        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeHighUprightScorePosition), wrist))
-        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-        // operator_DPAD_RIGHT
-        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeMidUprightScorePosition), arm))
-        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeMidUprightScorePosition), wrist))
-        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-        //     //TODO not sure if this should be mid upright or mid sideways, see #programming
-        // operator_DPAD_LEFT
-        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorSidewaysIntakePosition), arm))
-        //     .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorSidewaysIntakePosition), wrist))
-        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-        // operator_DPAD_DOWN
-        //     .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kConeFloorUprightIntakePosition), arm))
-        //     .onTrue (new RunCommand(() -> wrist.setWristPosition(WristConstants.kConeFloorUprightIntakePosition), wrist))
-        //     .onFalse(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
-        //     .onFalse(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-
-        // Cube Intake/Outtake Action
-        // operator_RB
-          //   .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
-        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
-        // operator_LB
-        //     .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
-        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
-
-        // driver_RB
-        //     .onTrue(new RunCommand(() -> intake.set(-0.9), wrist))
-        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
-        // driver_LB
-        //     .onTrue(new RunCommand(() -> intake.set(0.9), wrist))
-        //     .onFalse(new RunCommand(() -> intake.set(0), wrist));
-
-
-        // double LTvalue = operatorController.getLeftTriggerAxis();
-        // double RTvalue = operatorController.getRightTriggerAxis();
-        // double rstick = operatorController.getRightY();
-        // double lstick = operatorController.getLeftY();
-
-        // if (lstick > 0.0) {
-        //     arm.setOpenLoop(0.2);
-        // } else arm.stopArm();
-
-        // if (rstick > 0.0) {
-        //     wrist.setWrist(0.1);
-        // } else wrist.stopWrist();
-
-        // if (LTvalue > 0.0) intake.set(0.75);
-        // else intake.stopIntake();
-
-        // if (RTvalue > 0.0) intake.set(-0.75);
-        // else intake.stopIntake();
-        
-
-        //operatorController.getLeftTriggerAxis()
-        
-                //.alongWith(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist)));
-            //.andThen(new RunCommand(() -> wrist.setWristPosition(WristConstants.kCubeHighScorePosition), wrist));
-            // driver_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
-        //     .whileHeld(new RunCommand(() -> {
-        //         intake.intake(0.95);
-        //         intake.setConveyor(0.3);
-        //     }, intake))
-        //     .whenReleased(new RunCommand(() -> {
-        //         arm.setOpenLoop(-0.05);
-        //         // intake.intake(0.7);
-        //     }, arm, intake).withTimeout(0.5).andThen(new RunCommand(() ->{
-        //         intake.intake(0.0);
-        //         intake.setConveyor(0.3);
-        //     }, intake)).withTimeout(1.2)
-        //     .andThen(arm::stopArm, arm).andThen(intake::stopIntake));
-
-
-        // operator_RB.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm).withTimeout(1.7))
-        // .whileHeld(new RunCommand(() -> {
-        //     intake.intake(0.95);
-        //     intake.setConveyor(0.3);
-        // }, intake))
-        // .whenReleased(new RunCommand(() -> {
-        //     arm.setOpenLoop(-0.05);
-        //     // intake.intake(0.7);
-        // }, arm, intake).withTimeout(0.5).andThen(new RunCommand(() ->{
-        //     intake.intake(0.0);
-        //     intake.setConveyor(0.3);
-        // }, intake)).withTimeout(1.2)
-        // .andThen(arm::stopArm, arm).andThen(intake::stopIntake));
-        
-        // driver_Y.whenHeld(new RunCommand(() -> arm.setOpenLoop(-0.05), arm).withTimeout(1.7))
-        //     .whileHeld(new RunCommand(() -> {
-        //         intake.intake(0.95);
-        //         intake.setConveyor(0.3);
-        //     }, intake))
-        //     .whenReleased(new InstantCommand(() -> {
-        //         arm.stopArm();
-        //         intake.stopIntake();
-        //     }, arm, intake));
-        // driver_LB.whileHeld(new SillyShoot());
-        // driver_X.whileHeld(new HubTrack());
-
-        // for(JoystickButton button : Set.of(driver_B, operator_X)) { 
-        //     button.whenHeld(new RunCommand(() -> arm.setOpenLoop(0.05), arm)
-        //         .alongWith(
-        //             new RunCommand(() -> intake.intake(0.95), intake).withTimeout(0.3)
-        //             .andThen(new RunCommand(() -> intake.intake(0), intake).withTimeout(0.15))
-        //             .andThen(new RunCommand(() -> {
-        //                 intake.intake(-0.7);
-        //                 intake.setConveyor(-0.3);
-        //             }, intake))
-        //         )
-        //     )
-        //     .whenReleased(
-        //         new InstantCommand(intake::stopIntake, intake)
-        //         .alongWith(new StartEndCommand(() -> arm.setOpenLoop(-0.05), arm::stopArm, arm).withTimeout(1.7))
-        //     );
-        // }
-        
-
-        /*operator_X.whenHeld(new RunCommand(() -> Arm.getInstance().setOpenLoop(0.05), Arm.getInstance()).withTimeout(1.7))
-            .whileHeld(new RunCommand(() -> intake.intake(-0.7), intake)
-                .alongWith(new RunCommand(() -> intake.setConveyor(-0.3)))
-                .alongWith(new RunCommand(() -> shooter.setStagingMotor(-0.2))))
-            .whenReleased(new InstantCommand(() -> intake.stopIntake())
-                .alongWith(new RunCommand(() -> Arm.getInstance().setOpenLoop(-0.05), Arm.getInstance()).withTimeout(1.7))
-                .alongWith(new RunCommand(() -> shooter.setStagingMotor(0.0))));*/
-
-    //     driver_LB.whileHeld(new RunCommand(() -> Shooter.getInstance().setStagingMotor(0.3)) //NOTE: requiring shooter will cancel the default command keeping the flywheel spinning
-    //         .alongWith(new RunCommand(() -> Intake.getInstance().setConveyor(0.5), Intake.getInstance())))
-    //         .whenReleased(new RunCommand(() -> Shooter.getInstance().setStagingMotor(0.0)).alongWith(new RunCommand(() -> Intake.getInstance().setConveyor(0.0))));
-    //     operator_B.whileHeld(new RunCommand(() -> intake.setConveyor(0.3), intake)).whenReleased(new InstantCommand(()-> intake.stopIntake(), intake));
-    //     //operator_DPAD_UP.whileHeld(new RunCommand(() -> climber.climb(0.3), climber)).whenReleased(new InstantCommand(() -> climber.stop(), climber));
-    //     //operator_DPAD_DOWN.whileHeld(new RunCommand(() -> climber.climb(-0.5), climber)).whenReleased(new InstantCommand(() -> climber.stop()));
-    //     operator_DPAD_LEFT.whileHeld(new RunCommand(() -> arm.setOpenLoop(0.06), arm)).whenReleased(new InstantCommand(()->arm.setOpenLoop(0.0)));
-    //     operator_DPAD_RIGHT.whileHeld(new RunCommand(() -> arm.setOpenLoop(-0.06), arm)).whenReleased(new InstantCommand(()->arm.setOpenLoop(0.0)));
-    //     operator_VIEW.whileHeld(new RunCommand(() -> climber.setLeftMotor(-ClimbConstants.climbSens), climber)).whenReleased(climber::stop, climber);
-    //     operator_MENU.whileHeld(new RunCommand(() -> climber.setLeftMotor(ClimbConstants.climbSens), climber)).whenReleased(climber::stop, climber);
     }
 
     public static Command setConeIntake() {
@@ -389,6 +244,30 @@ public class RobotContainer {
                 new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
                 new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
             ).alongWith(new RunCommand(() -> intake.setAuto(1.), intake));
+    }
+
+    public static Command intakeCommandb() {
+        intake.setCurrLimit(30);
+        Intake.running = true;
+        Intake.isReleased = true;
+        //intake.set(speed);
+        return new SequentialCommandGroup(
+                new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.08),
+                new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
+                new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
+            ).alongWith(new RunCommand(() -> intake.setAuto(1.), intake));
+    }
+
+    public static Command intakeCommandParallel() {
+        intake.setCurrLimit(30);
+        Intake.running = true;
+        Intake.isReleased = true;
+        //intake.set(speed);
+        return new ParallelCommandGroup(
+                new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm),
+                new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist),
+                new RunCommand(() -> intake.setAuto(1.), intake)
+            );
     }
     public static Command setArmWrist(Intake.ScorePos pos) {
         return new RunCommand(() -> arm.setArmPositionAuto(pos), arm).alongWith(

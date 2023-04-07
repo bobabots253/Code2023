@@ -106,20 +106,21 @@ public class Robot extends TimedRobot {
 
 
     // MAIN AUTO
-    // CommandScheduler.getInstance().schedule(
-    //   new SequentialCommandGroup(
-    //     new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
-    //     new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
-    //     new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
-    //     new WaitCommand(.5),
-    //     new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
-    //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1))
-    //   );
+    CommandScheduler.getInstance().schedule(
+      new SequentialCommandGroup(
+        new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
+        new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
+        new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
+        new WaitCommand(.5),
+        new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
+        new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1)
+        )
+      );
 
-    CommandScheduler.getInstance().schedule(Auto.highConeBackup());
+    // CommandScheduler.getInstance().schedule(Auto.highConeBackup());
 
   }
-
+  
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
