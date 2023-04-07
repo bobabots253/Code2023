@@ -153,6 +153,13 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    double speed = mAutoBalance.autoBalanceRoutine();
+    // speed = 0.25;
+    SmartDashboard.putNumber("autobalance SPEED", speed);
+    SmartDashboard.putNumber("autobalance TILT", mAutoBalance.getTilt());
+    SmartDashboard.putNumber("autobalance ROLL", mAutoBalance.getRoll());
+    SmartDashboard.putNumber("autobalance PITCH", mAutoBalance.getPitch());
+
     SmartDashboard.putNumber("LTval", RobotContainer.getOperatorLT());
     SmartDashboard.putNumber("RTval", RobotContainer.getOperatorRT());
   }
