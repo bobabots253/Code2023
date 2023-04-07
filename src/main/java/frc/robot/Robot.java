@@ -112,7 +112,7 @@ public class Robot extends TimedRobot {
         new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
         new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
         new WaitCommand(.5),
-        // new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
+        new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
         new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1)
         )
       );
