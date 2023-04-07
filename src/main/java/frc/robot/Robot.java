@@ -141,7 +141,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("autobalance TILT", mAutoBalance.getTilt());
     SmartDashboard.putNumber("autobalance ROLL", mAutoBalance.getRoll());
     SmartDashboard.putNumber("autobalance PITCH", mAutoBalance.getPitch());
-    CommandScheduler.getInstance().schedule(new RunCommand(() -> Drivetrain.setOpenLoop(-speed, -speed), RobotContainer.drivetrain));
+    CommandScheduler.getInstance().schedule(new RunCommand(() -> Drivetrain.setOpenLoop(speed, speed), RobotContainer.drivetrain));
   }
 
   /** This function is called once when teleop is enabled. */
