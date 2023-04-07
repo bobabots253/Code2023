@@ -33,7 +33,7 @@ public class AutoBalance {
         robotSpeedSlow = 0.2;
 
         // Angle where the robot knows it is on the charge station, default = 13.0
-        onChargeStationDegree = 14.0;
+        onChargeStationDegree = 13.0;
 
         // Angle where the robot can assume it is level on the charging station
         // Used for exiting the drive forward sequence as well as for auto balancing,
@@ -107,7 +107,7 @@ public class AutoBalance {
                 if (getTilt() < levelDegree) {
                     debounceCount++;
                 }
-                if (debounceCount > secondsToTicks(0.2)) {
+                if (debounceCount > secondsToTicks(0.27)) {
                     state = 2;
                     debounceCount = 0;
                     return 0;
