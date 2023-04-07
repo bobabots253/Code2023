@@ -1,6 +1,7 @@
 package frc.robot.Autonomous;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoBalance {
     private BuiltInAccelerometer mRioAccel;
@@ -32,7 +33,7 @@ public class AutoBalance {
         robotSpeedSlow = 0.2;
 
         // Angle where the robot knows it is on the charge station, default = 13.0
-        onChargeStationDegree = 15.0;
+        onChargeStationDegree = 14.0;
 
         // Angle where the robot can assume it is level on the charging station
         // Used for exiting the drive forward sequence as well as for auto balancing,
@@ -88,6 +89,7 @@ public class AutoBalance {
     // returns a value from -1.0 to 1.0, which left and right motors should be set
     // to.
     public double autoBalanceRoutine() {
+        SmartDashboard.putNumber("AUTO BALANCE STATE", state);
         switch (state) {
             // drive forwards to approach station, exit when tilt is detected
             case 0:
@@ -105,7 +107,7 @@ public class AutoBalance {
                 if (getTilt() < levelDegree) {
                     debounceCount++;
                 }
-                if (debounceCount > secondsToTicks(debounceTime)) {
+                if (debounceCount > secondsToTicks(0.2)) {
                     state = 2;
                     debounceCount = 0;
                     return 0;
