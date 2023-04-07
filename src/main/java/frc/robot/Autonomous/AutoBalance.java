@@ -25,12 +25,12 @@ public class AutoBalance {
          * CONFIG *
          **********/
         // Speed the robot drived while scoring/approaching station, default = 0.4
-        robotSpeedFast = 0.4;
+        robotSpeedFast = 0.3;
 
         // Speed the robot drives while balancing itself on the charge station.
         // Should be roughly half the fast speed, to make the robot more accurate,
         // default = 0.2
-        robotSpeedSlow = 0.2;
+        robotSpeedSlow = 0.1;
 
         // Angle where the robot knows it is on the charge station, default = 13.0
         onChargeStationDegree = 13.0;
@@ -107,7 +107,7 @@ public class AutoBalance {
                 if (getTilt() < levelDegree) {
                     debounceCount++;
                 }
-                if (debounceCount > secondsToTicks(0.27)) {
+                if (debounceCount > secondsToTicks(0.2)) {
                     state = 2;
                     debounceCount = 0;
                     return 0;
