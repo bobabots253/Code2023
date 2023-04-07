@@ -1,5 +1,6 @@
 package frc.robot.Autonomous;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -15,6 +16,7 @@ public class AutoBalance {
     private double singleTapTime;
     private double scoringBackUpTime;
     private double doubleTapTime;
+    private static LinearFilter filter;
 
     public AutoBalance() {
         mRioAccel = new BuiltInAccelerometer();
@@ -58,6 +60,8 @@ public class AutoBalance {
         // Amount of time to drive forward to secure the scoring of the gamepiece
         doubleTapTime = 0.3;
 
+
+        filter = LinearFilter.movingAverage(30);
     }
 
     public double getPitch() {
@@ -107,11 +111,16 @@ public class AutoBalance {
                 if (getTilt() < levelDegree) {
                     debounceCount++;
                 }
-                if (debounceCount > secondsToTicks(0.2)) {
+                if (debounceCount > secondsToTicks(0.28)) {
                     state = 2;
                     debounceCount = 0;
                     return 0;
                 }
+
+                // if (Math.abs(getTilt()) <= 3.0) {
+                //     state = 2;
+                //     return 0.0;
+                // }
                 return -robotSpeedSlow;
             // on charge station, stop motors and wait for end of auto
             case 2:
