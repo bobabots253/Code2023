@@ -94,6 +94,8 @@ public class AutoBalance {
     // to.
     public double autoBalanceRoutine() {
         SmartDashboard.putNumber("AUTO BALANCE STATE", state);
+        double filterOutput = filter.calculate(getTilt());
+        SmartDashboard.putNumber("TILT filtered output", filterOutput);
         switch (state) {
             // drive forwards to approach station, exit when tilt is detected
             case 0:
