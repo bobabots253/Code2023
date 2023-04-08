@@ -180,6 +180,9 @@ public class Arm extends ProfiledPIDSubsystem {
             case STOW:
                 encoderVal = ArmConstants.kStow;
                 break;
+            case SHELF:
+                encoderVal = ArmConstants.kShelf;
+                break;
             default:
                 break;
         }

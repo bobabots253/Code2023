@@ -159,6 +159,10 @@ public class Wrist extends ProfiledPIDSubsystem {
                 wristMotor.setSmartCurrentLimit(20);
                 encoderVal = WristConstants.kStow + 0.35;
                 break;
+            case SHELF:
+                wristMotor.setSmartCurrentLimit(climit);
+                encoderVal = WristConstants.kShelf;
+                break;
             default:
                 break;
         }

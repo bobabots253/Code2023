@@ -57,6 +57,7 @@ public class Constants {
 
         public static double autoDisplacementRads;
         public static int gearRatio = 25;
+        public static double kShelf = -32.094963;
 
         //arm encoder values
         // arm mid cone = -28.714066
@@ -109,6 +110,8 @@ public class Constants {
         public static double kCos = 0.771;
         public static double kV = 0.758;
         public static double kA = 0.00717;
+
+        public static double kShelf = 39.928169;
 
     }
 

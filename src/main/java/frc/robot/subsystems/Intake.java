@@ -34,7 +34,7 @@ public class Intake implements Subsystem {
     }
 
     public enum ScorePos {
-        HIGH(1), MID(2), LOW(3), STOW(4);
+        HIGH(1), MID(2), LOW(3), STOW(4), SHELF(5);
         public int val;
         private ScorePos(int val) {
             this.val = val;

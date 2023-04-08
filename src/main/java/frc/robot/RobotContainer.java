@@ -169,6 +169,18 @@ public class RobotContainer {
 
         operator_LB.whileTrue(setConeIntake());
         operator_RB.onTrue(setCubeIntake());
+
+        operator_MENU
+            // .onTrue(setArmWrist(Intake.ScorePos.LOW))
+            // .onFalse(stow());
+            .onTrue(intakeCommandShelf())
+            // .onTrue(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm))
+            // .onTrue(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist))
+            .onFalse(new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.STOW), arm))
+            .onFalse(new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.STOW), wrist))
+            //.onFalse(new InstantCommand(() -> intake.stopIntake(), intake))
+            .onFalse(runningOff());
+
         operator_A
             // .onTrue(setArmWrist(Intake.ScorePos.LOW))
             // .onFalse(stow());
@@ -230,6 +242,16 @@ public class RobotContainer {
     public static Command runningOff() {
         return new InstantCommand(() -> intake.runOff(), intake);
     }
+    public static Command intakeCommandShelf() {
+        intake.setCurrLimit(30);
+        Intake.running = true;
+        Intake.isReleased = true;
+        return new SequentialCommandGroup(
+                new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.SHELF), arm).withTimeout(0.15),
+                new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.SHELF), wrist)
+            ).alongWith(new RunCommand(() -> intake.setAuto(1.), intake));
+    }
+
     public static Command intakeCommand() {
         // double sspeed = 0.;
         // if (Intake.cone) sspeed = 1.;
