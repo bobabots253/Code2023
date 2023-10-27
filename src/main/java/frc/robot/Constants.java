@@ -27,7 +27,7 @@ public class Constants {
     public static class DriverConstants {
         /* Common drive mode settings */
         public static final double kJoystickDeadband = 0.07; // How much of joystick is "dead" zone [0,1]
-        public static final double kDriveSens = 1.0; // Overall speed setting (turn down for demos) [0,1] //changed to 1.0
+        public static final double kDriveSens = .85; // Overall speed setting (turn down for demos) [0,1] //changed to 1.0
         public static final double kTurnInPlaceSens = 0.175; //0.175; // Maximum turn-in-place rate (in percent of max) to allow
                                                             // robot to turn to [0,1] //original is .3
         public static final double kTurnSens = .65; //.65; // Maximum normal turning rate (in percent of max) to allow robot to
@@ -38,9 +38,9 @@ public class Constants {
         public static final int actuateMotorL = 4; //change to actuatemotor
         public static final int actuateMotorR = 0;
         /* PID Constants */
-        public static double kP = 0.3;
-        public static double kI = 0;
-        public static double kD = 0;
+        public static double kP = 0.1; //0.04
+        public static double kI = 0.0; //0.0
+        public static double kD = 0.25; //0.035
 
         /* Feedforward Constants */
         public static double kS = 0.402;
@@ -65,7 +65,7 @@ public class Constants {
 
         // wrist high cone = 39.761509
         // arm high cone = -32.071156
-        public static final double kStow = -6.857;
+        public static double kStow = -6.523813; //-6.857 before
         public static final double kCubeFloorIntakePosition = -5.285 + kStow;
         public static final double kCubeMidScorePosition = -27.499;
         public static final double kCubeHighScorePosition = -33.499;
@@ -74,6 +74,7 @@ public class Constants {
         public static final double kConeMidScorePosition = -28.714066;
         public static final double kConeMidSidewaysScorePosition = -17.286; // not used
         public static final double kConeHighScorePosition = -35;
+        //public static final double kStowTest = -10.476241;
         
 
 
@@ -103,7 +104,7 @@ public class Constants {
         /* PID Constants */
         public static double kP = 0.2;
         public static double kI = 0.0;
-        public static double kD = 0.1;
+        public static double kD = 0.0;
 
         /* Feedforward Constants */
         public static double kS = 0.402;

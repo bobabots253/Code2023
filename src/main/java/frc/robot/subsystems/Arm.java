@@ -195,6 +195,10 @@ public class Arm extends ProfiledPIDSubsystem {
         SmartDashboard.putNumber("Arm SetPoint", position);
     }
 
+    public void resetArmStow() {
+        ArmConstants.kStow = getPosition();
+        SmartDashboard.putNumber("kStow enc value", ArmConstants.kStow);
+    }
     public void setArmPositionDegree(double degreePosition) { //define degreePosition earlier
         double convertDeg = 11.375;
         double encoderPosition = degreePosition*convertDeg; //degree to encoder

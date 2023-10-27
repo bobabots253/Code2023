@@ -69,7 +69,7 @@ public class Auto {
             new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
             new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
             new WaitCommand(.5),
-            new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1.75),
+            new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1),
             new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(2)
 // "HIGH" = Mid Cone (idk why) - Timing shoud work and has been tested on practice field
 // Drivetrain backout of community is BROKEN, drives indefinelty.

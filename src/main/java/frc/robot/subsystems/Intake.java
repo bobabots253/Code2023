@@ -30,6 +30,7 @@ public class Intake implements Subsystem {
         // cone = false;
         running = false;
         isReleased = false;
+        intakeMotor.setInverted(true);
         register();
     }
 
@@ -124,6 +125,7 @@ public class Intake implements Subsystem {
     }
     public void set(double value) {
         intakeMotor.set(value);
+        // SmartDashboard.putNumber("CanID 4 (intake) voltage", intakeMotor.getBusVoltage());
         SmartDashboard.putNumber("INTAKE speed", value);
     }
 

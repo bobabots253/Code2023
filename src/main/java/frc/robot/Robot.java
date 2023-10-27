@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
     RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
     RobotContainer.intake.set(0);
     RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
-    //arm knocked out 10-7/23
+    //arm knocked out 10-25-23
   }
 
   /**

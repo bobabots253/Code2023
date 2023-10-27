@@ -66,7 +66,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         pidController.setP(WristConstants.kP);
         pidController.setI(WristConstants.kI);
         pidController.setD(WristConstants.kD);
-        pidController.setIZone(0.1);
+        pidController.setIZone(0);
         pidController.setFF(0);
         pidController.setOutputRange(-0.6, 0.6);
         // wristMotor.setSmartCurrentLimit(5);
@@ -107,6 +107,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         SmartDashboard.putNumber("WRIST: RAW", wristEncoder.getPosition());
         SmartDashboard.putNumber("WRIST: absolute angle", wristAbsolulteEncoder.getPosition()*36000.0/WristConstants.gearRatio);
         SmartDashboard.putNumber("WRIST: absolute position", wristAbsolulteEncoder.getPosition());
+        
         
 
         // if (RobotContainer.getOperatorLeftY() > 0.0) setWrist(0.1);
@@ -167,6 +168,8 @@ public class Wrist extends ProfiledPIDSubsystem {
                 break;
         }
         pidController.setReference(encoderVal /*- WristConstants.initialWristAngle*/, ControlType.kPosition);
+         SmartDashboard.putNumber("CanID 10 (wrist) voltage", wristMotor.getBusVoltage());
+        // SmartDashboard.putNumber("CanID 10 current", wristMotor.getOutputCurrent());
         SmartDashboard.putNumber("Wrist SetPoint", encoderVal);
     }
 

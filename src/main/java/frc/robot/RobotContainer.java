@@ -202,7 +202,8 @@ public class RobotContainer {
         operator_B
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
             .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
-
+        operator_VIEW
+            .onTrue(new RunCommand(() -> arm.resetArmStow(), arm));
         // operator_B.onTrue(stow());
 
         // manual wrist and arm positioning
