@@ -51,9 +51,9 @@ public class Robot extends TimedRobot {
     //     RobotContainer.getAutonomousCommand(Auto.Selection.MOVEWRIST));
     SmartDashboard.putData("Auto choices", m_chooser);
     // INITIALIZE TO STOW POSITION
-    RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
+    // RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
     RobotContainer.intake.set(0);
-    RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
+    // RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
     //arm knocked out 10-7/23
   }
 
@@ -71,6 +71,19 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Port 21 Current", pdp.getCurrent(21));
+    SmartDashboard.putNumber("Port 8 Current", pdp.getCurrent(8));
+    SmartDashboard.putNumber("Port 9 Current", pdp.getCurrent(9));
+    SmartDashboard.putNumber("Port 10 Current", pdp.getCurrent(10));
+    SmartDashboard.putNumber("Port 11 Current", pdp.getCurrent(11));
+    SmartDashboard.putNumber("Port 6 Current", pdp.getCurrent(6));
+    SmartDashboard.putNumber("Port 7 Current", pdp.getCurrent(7));
+    SmartDashboard.putNumber("Port 12 Current", pdp.getCurrent(12));
+    SmartDashboard.putNumber("Port 13 Current", pdp.getCurrent(13));
+    SmartDashboard.putNumber("Port 4  Current", pdp.getCurrent(4));
+    SmartDashboard.putNumber("Port 5 Current", pdp.getCurrent(5));
+    SmartDashboard.putNumber("Port 14 Current", pdp.getCurrent(14));
+    SmartDashboard.putNumber("Port 15 Current", pdp.getCurrent(15));
+    
   }
 
   /**
@@ -107,21 +120,21 @@ public class Robot extends TimedRobot {
 
 
     // MAIN AUTO
-    // CommandScheduler.getInstance().schedule(
-    //   new SequentialCommandGroup(
-    //     new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
-    //     new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
-    //     new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
-    //     new WaitCommand(.5),
-    //     new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
-    //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1)
-    //     )
-    //   );
+    CommandScheduler.getInstance().schedule(
+      new SequentialCommandGroup(
+    //     // new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
+    //     // new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
+    //     new RunCommand(() -> RobotContainer.intake.set(0.9), RobotContainer.intake).withTimeout(0.25),
+    //     new WaitCommand(0.5),
+        new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.25),
+        new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1.5)
+        )
+      );
     // Main Auto: low cone & mobility
 
     //MID CONE AUTO
-    CommandScheduler.getInstance().schedule(Auto.highConeBackup());
-    // Mid Cone Auto: mid cone & mobility
+    // CommandScheduler.getInstance().schedule(Auto.highConeBackup());
+    // // Mid Cone Auto: mid cone & mobility
 
     //WIP Possibilities???
     // WIP Min: High Cone & Mobility

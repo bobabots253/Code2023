@@ -62,8 +62,8 @@ public class Auto {
             new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.HIGH), RobotContainer.arm),
             new InstantCommand(() -> Drivetrain.setOpenLoop(0, 0), RobotContainer.drivetrain),
             new WaitCommand(2.),
-            new RunCommand(() -> Drivetrain.setOpenLoop(0.10, 0.10), RobotContainer.drivetrain).withTimeout(2),
-            new RunCommand(() -> RobotContainer.intake.set(-1.2), RobotContainer.intake).withTimeout(1),
+            new RunCommand(() -> Drivetrain.setOpenLoop(0.10, 0.10), RobotContainer.drivetrain).withTimeout(1.9),
+            new RunCommand(() -> RobotContainer.intake.set(1.25), RobotContainer.intake).withTimeout(1),
             new RunCommand(() -> Drivetrain.setOpenLoop(-0.10, -0.10), RobotContainer.drivetrain).withTimeout(.25),
             new WaitCommand(.25),
             new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
@@ -72,8 +72,6 @@ public class Auto {
             new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(1.75),
             new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(2)
 // "HIGH" = Mid Cone (idk why) - Timing shoud work and has been tested on practice field
-// Drivetrain backout of community is BROKEN, drives indefinelty.
-//Might be bc of negative numbers since it doesnt show up as left or right compared to positive numbers.
         );
     }
 }
