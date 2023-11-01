@@ -16,11 +16,13 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Autonomous.Auto;
+import frc.robot.Constants.WristConstants;
 import frc.robot.commands.DriveXMeters;
 import frc.robot.commands.TurnXDegrees;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Wrist;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -54,7 +56,7 @@ public class Robot extends TimedRobot {
     RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
     RobotContainer.intake.set(0);
     RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
-    //arm knocked out 10-25-23
+    //arm knocked out 10-28-23
   }
 
   /**
@@ -107,20 +109,22 @@ public class Robot extends TimedRobot {
 
 
     // MAIN AUTO
-    // CommandScheduler.getInstance().schedule(
-    //   new SequentialCommandGroup(
+    CommandScheduler.getInstance().schedule(
+      new SequentialCommandGroup(
     //     new InstantCommand(() -> RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW), RobotContainer.wrist),
     //     new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
     //     new RunCommand(() -> RobotContainer.intake.set(-0.9), RobotContainer.intake).withTimeout(1),
     //     new WaitCommand(.5),
-    //     new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2),
+        new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.2)
     //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1)
-    //     )
-    //   );
+        )
+      );
+
+    // Current 10-28-23 mobility only
     // Main Auto: low cone & mobility
 
     //MID CONE AUTO
-    CommandScheduler.getInstance().schedule(Auto.highConeBackup());
+    // CommandScheduler.getInstance().schedule(Auto.highConeBackup());
     // Mid Cone Auto: mid cone & mobility
 
     //WIP Possibilities???
@@ -155,8 +159,8 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     SmartDashboard.putNumber("LTval", RobotContainer.getOperatorLT());
     SmartDashboard.putNumber("RTval", RobotContainer.getOperatorRT());
+    // SmartDashboard.putData("Encoder Stuff", RobotCotainer.);
   }
-
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {

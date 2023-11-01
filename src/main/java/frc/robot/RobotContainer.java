@@ -202,22 +202,28 @@ public class RobotContainer {
         operator_B
             .onTrue(new RunCommand(() -> arm.setArmPosition(ArmConstants.kStow), arm))
             .onTrue(new RunCommand(() -> wrist.setWristPosition(WristConstants.kStow), wrist));
+            //Stow old finicky
+
+        
+
         operator_VIEW
             .onTrue(new RunCommand(() -> arm.resetArmStow(), arm));
         // operator_B.onTrue(stow());
 
         // manual wrist and arm positioning
         operator_DPAD_UP.whileTrue(
-            new RunCommand(() -> wrist.setWrist(0.1), wrist)
+            new RunCommand(() -> wrist.setWrist(0.25), wrist)
         ).onFalse(
             new RunCommand(() -> wrist.stopWrist(), wrist)
         );
+        //     new RunCommand(() -> wrist.setWrist(0.5), wrist)
 
         operator_DPAD_DOWN.whileTrue(
-            new RunCommand(() -> wrist.setWrist(-0.1), wrist)
+            new RunCommand(() -> wrist.setWrist(-0.25), wrist)
         ).onFalse(
             new RunCommand(() -> wrist.stopWrist(), wrist)
         );
+         // wristMotor.set(value); ???
 
         operator_DPAD_RIGHT.whileTrue(
             new RunCommand(() -> arm.setOpenLoop(0.1), arm)
@@ -464,6 +470,11 @@ public class RobotContainer {
         return deadbandX(operatorController.getRightTriggerAxis(), DriverConstants.kJoystickDeadband);
     }
 
+    public static double getAbsoluteEncoder(){
+        return getAbsoluteEncoder();
+    }
+
+    
 
     /*public static Color getColor() {
         return colorSensorV3.getColor();

@@ -205,6 +205,8 @@ public class Arm extends ProfiledPIDSubsystem {
         double currentPosition = armEncoder.getPosition(); 
         SmartDashboard.putNumber("degreePosition", degreePosition);
         SmartDashboard.putNumber("encoder value", encoderPosition);
+        SmartDashboard.putNumber("encoder value - #", encoderPosition);
+        //*************************** IMPORTANT */
         SmartDashboard.putNumber("current arm position", currentPosition);
     }
 }

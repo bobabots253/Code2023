@@ -69,6 +69,8 @@ public class Wrist extends ProfiledPIDSubsystem {
         pidController.setIZone(0);
         pidController.setFF(0);
         pidController.setOutputRange(-0.6, 0.6);
+        double currentEncoderPos = wristAbsolulteEncoder.getPosition();
+        
         // wristMotor.setSmartCurrentLimit(5);
         //conveyorMotor = Util.createSparkMAX(ConveyorConstants.motor, MotorType.kBrushless);
         // conveyorMotor.setInverted(true);
@@ -107,7 +109,7 @@ public class Wrist extends ProfiledPIDSubsystem {
         SmartDashboard.putNumber("WRIST: RAW", wristEncoder.getPosition());
         SmartDashboard.putNumber("WRIST: absolute angle", wristAbsolulteEncoder.getPosition()*36000.0/WristConstants.gearRatio);
         SmartDashboard.putNumber("WRIST: absolute position", wristAbsolulteEncoder.getPosition());
-        
+        // SmartDashboard.("PIDStuff", WristConstants.kConeFloorIntakePosit);
         
 
         // if (RobotContainer.getOperatorLeftY() > 0.0) setWrist(0.1);
