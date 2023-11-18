@@ -249,7 +249,7 @@ public class RobotContainer {
         return new SequentialCommandGroup(
                 new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.SHELF), arm).withTimeout(0.15),
                 new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.SHELF), wrist)
-            ).alongWith(new RunCommand(() -> intake.setAuto(1.), intake));
+            ).alongWith(new RunCommand(() -> intake.setAuto(-1.0), intake));
     }
 
     public static Command intakeCommand() {
@@ -269,7 +269,7 @@ public class RobotContainer {
     }
 
     public static Command intakeCommandb() {
-        intake.setCurrLimit(30);
+        intake.setCurrLimit(20);
         Intake.running = true;
         Intake.isReleased = true;
         //intake.set(speed);
@@ -277,7 +277,7 @@ public class RobotContainer {
                 new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.08),
                 new RunCommand(() -> arm.setArmPositionAuto(Intake.ScorePos.LOW), arm).withTimeout(0.15),
                 new RunCommand(() -> wrist.setWristPositionAuto(Intake.ScorePos.LOW), wrist)
-            ).alongWith(new RunCommand(() -> intake.setAuto(1.), intake));
+            ).alongWith(new RunCommand(() -> intake.setAuto(-1.), intake));
     }
 
     public static Command intakeCommandParallel() {

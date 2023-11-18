@@ -30,6 +30,7 @@ public class Intake implements Subsystem {
         // cone = false;
         running = false;
         isReleased = false;
+        intakeMotor.setInverted(true);
         register();
     }
 
@@ -68,7 +69,7 @@ public class Intake implements Subsystem {
         }
 
         int highcurrlimit = 20;
-        int lowcurrlimit = 3;
+        int lowcurrlimit = 12;
 
         SmartDashboard.putBoolean("OPERATOR VIEW", RobotContainer.operator_VIEW.getAsBoolean());
 
@@ -86,7 +87,7 @@ public class Intake implements Subsystem {
         // }
         double filterOutput = filter.calculate(intakeMotor.getOutputCurrent());
         SmartDashboard.putNumber("INTAKE filtered output", filterOutput);
-        if (filterOutput > 25.0) {
+        if (filterOutput > 20.0) {
             intakeMotor.setSmartCurrentLimit(lowcurrlimit);
             if (cone) set(.1);
             else set(-.1);
@@ -160,14 +161,15 @@ public class Intake implements Subsystem {
     public void setHold(double value) {
         double current = intakeMotor.getOutputCurrent();
         intakeMotor.set(value);
-        int limit = 40;
+        int limit = 30;
         int lowLim = 20;
         if (current > limit) {
             intakeMotor.set(value/3.);
         } else {
             intakeMotor.set(value);
         }
-       
+       //Replacement Neo 650 for Intake Testing Output
+    SmartDashboard.putNumber("NEO 650 Intake Current", intakeMotor.getOutputCurrent());
     }
     /**
      * Stops the intake

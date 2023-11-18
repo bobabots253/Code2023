@@ -52,9 +52,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     // INITIALIZE TO STOW POSITION
     // RobotContainer.wrist.setWristPositionAuto(Intake.ScorePos.STOW);
-    RobotContainer.intake.set(0);
+    // RobotContainer.intake.set(0);
     // RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW);
-    //arm knocked out 10-7/23
+    // arm knocked out 10-7/23
   }
 
   /**
@@ -70,7 +70,6 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Port 21 Current", pdp.getCurrent(21));
     SmartDashboard.putNumber("Port 8 Current", pdp.getCurrent(8));
     SmartDashboard.putNumber("Port 9 Current", pdp.getCurrent(9));
     SmartDashboard.putNumber("Port 10 Current", pdp.getCurrent(10));
@@ -126,8 +125,8 @@ public class Robot extends TimedRobot {
     //     // new InstantCommand(() -> RobotContainer.arm.setArmPositionAuto(Intake.ScorePos.STOW), RobotContainer.arm),
     //     new RunCommand(() -> RobotContainer.intake.set(0.9), RobotContainer.intake).withTimeout(0.25),
     //     new WaitCommand(0.5),
-        new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.25),
-        new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1.5)
+    //     new RunCommand(() -> Drivetrain.setOpenLoop(-0.25, -0.25), RobotContainer.drivetrain).withTimeout(2.25)
+    // //     new RunCommand(() -> RobotContainer.intake.set(0)).withTimeout(1.5)
         )
       );
     // Main Auto: low cone & mobility
